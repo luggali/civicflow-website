@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://civicflow.at/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://civicflow.at/civicflow_adobe.png</image:loc>
+      <image:title>CivicFlow Technologies Plattform-Übersicht &amp; Logo</image:title>
+      <image:caption>Moderne Software &amp; digitale Plattformen für Gemeinden, Organisationen und innovative Sektoren in Österreich</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/innforum-atlas.png</image:loc>
+      <image:title>InnForum INFOATLAS - Interaktive Karte für Gemeinden</image:title>
+      <image:caption>OpenStreetMap-basierter interaktiver Sozial- und Einrichtungsatlas mit Nominatim-Geokodierung</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/innforum-monitoring.png</image:loc>
+      <image:title>InnForum Sozialmonitoring &amp; Radar-Chart</image:title>
+      <image:caption>Multidimensionales Radar-Chart für Sozialindikatoren und evidenzbasierte Planung in Kommunen</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/innforum-kooperation.png</image:loc>
+      <image:title>InnForum Kooperations- &amp; Umfrage-Zentrale</image:title>
+      <image:caption>Bürgerbeteiligung, Live-Umfragen ohne Login und Vernetzung für Vereine und Gemeinden</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/innforum-audio.png</image:loc>
+      <image:title>InnForum Barrierefreies Audio-Update &amp; Podcast</image:title>
+      <image:caption>Inklusive Audio-Ausgabe nach WZG und digitales Schwarzes Brett für Bürger:innen</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/innforum-netzwerk.png</image:loc>
+      <image:title>InnForum Akteurs-Netzwerk &amp; Lebenslagen-Graph</image:title>
+      <image:caption>Interaktiver Netzwerkgraph aller kommunalen Einrichtungen und Angebote</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/stratum-board.png</image:loc>
+      <image:title>Stratum Zeitbasiertes Aufgaben-Kanban</image:title>
+      <image:caption>Farbcodierte Zeitstufen von Heute bis Langfristig für kommunales Projektmanagement</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/stratum-kommunikation.png</image:loc>
+      <image:title>Stratum Stakeholder- &amp; Team-Kommunikationsboard</image:title>
+      <image:caption>Personenzentrierte Koordination von Themen, Aktionen und Abklärungen für Verwaltungen</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/stratum-ki-hub.png</image:loc>
+      <image:title>Stratum KI-Assistent &amp; Voice-to-Task Hub</image:title>
+      <image:caption>Sprachmemos vor Ort aufsprechen - Gemini-KI transkribiert und extrahiert strukturierte Aufgaben</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/stratum-gantt.png</image:loc>
+      <image:title>Stratum Interaktiver Gantt-Chart &amp; Timeline</image:title>
+      <image:caption>Projektzeitstrahl, Meilensteine und Fristenkontrolle für geförderte Vorhaben</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/stratum-bericht.png</image:loc>
+      <image:title>Stratum Förderberichte &amp; Word-Export</image:title>
+      <image:caption>Druckfertige Tätigkeitsberichte mit amtlichem Briefkopf auf Knopfdruck als DOCX</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/stratum-roadmap.png</image:loc>
+      <image:title>Stratum Strategische Roadmap &amp; Meilensteine</image:title>
+      <image:caption>Visualisierung übergeordneter Projektzeitachsen für Gremien und Fördergeber</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/referenz-erlebniswochen.png</image:loc>
+      <image:title>Referenz: Digitale Erlebniswochen Telfs</image:title>
+      <image:caption>Ferien- und Freizeitportal für 126 Angebote mit Filter, Merkliste und Druckvorlagen</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://civicflow.at/screenshots/referenz-sprachenvielfalt.png</image:loc>
+      <image:title>Showcase: Projekt Sprachenvielfalt</image:title>
+      <image:caption>Beteiligungstool mit Bildschirmtastaturen für 55 Sprachen und KI-Rückübersetzungswächter</image:caption>
+    </image:image>
+  </url>
+</urlset>

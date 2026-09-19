@@ -1,0 +1,18 @@
+# Robots.txt for CivicFlow Technologies
+# https://civicflow.at
+
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /screenshots/
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.svg$
+
+# Sitemaps
+Sitemap: https://civicflow.at/sitemap.xml
