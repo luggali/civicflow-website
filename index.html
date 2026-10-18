@@ -365,6 +365,57 @@
       overflow-x: hidden;
     }
 
+    /* ===== Premium Typography & Line-Wrapping (Modern Web Guidance) ===== */
+    h1, h2, h3, h4 {
+      text-wrap: balance;
+    }
+    p, li, blockquote {
+      text-wrap: pretty;
+    }
+
+    /* ===== Tailwind v3/v4 Utility Compatibility Bridge ===== */
+    .shadow-2xs {
+      box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+    }
+    .shadow-xs {
+      box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+    }
+    .backdrop-blur-xs {
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .focus\:outline-hidden:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+
+    /* ===== Sticky Header Nav Link Indicator ===== */
+    .header-nav-link {
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .header-nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #2563EB, #06B6D4);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .header-nav-link:hover::after,
+    .header-nav-link.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    .header-nav-link.active {
+      color: #1D4ED8;
+    }
+
     /* Living Animated Mesh Gradient */
     @keyframes meshFlow {
       0% { background-position: 0% 20%, 100% 0%, 50% 100%; }
@@ -1356,28 +1407,34 @@
 
   <!-- ==================== 2. MAIN HEADER NAVIGATION ==================== -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between gap-4">
       
       <!-- Brand Logo -->
-      <a href="#" class="flex items-center gap-3 group focus:outline-hidden py-1" aria-label="CivicFlow Technologies Startseite">
+      <a href="#" class="flex items-center gap-3 group focus:outline-hidden py-1 shrink-0" aria-label="CivicFlow Technologies Startseite">
         <img src="civicflow_adobe.png" alt="CivicFlow Technologies Logo" class="h-14 sm:h-18 md:h-20 w-auto object-contain transition duration-200 group-hover:opacity-95">
       </a>
 
       <!-- Desktop Navigation Links -->
-      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600">
-        <a href="#produkte" class="hover:text-blue-700 transition flex items-center gap-1.5">
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600" aria-label="Hauptnavigation">
+        <a href="#produkte" data-nav="produkte" class="header-nav-link hover:text-blue-700 transition flex items-center gap-1.5">
           <span>Kernprodukte</span>
           <span class="px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 text-[10px] font-bold">SaaS</span>
         </a>
-        <a href="#referenzen" class="hover:text-blue-700 transition">Praxis-Referenzen</a>
-        <a href="#vorteile" class="hover:text-blue-700 transition">Vorteile</a>
-        <a href="#ueber-uns" class="hover:text-blue-700 transition">Über uns</a>
-        <a href="#faq" class="hover:text-blue-700 transition">FAQ</a>
-        <a href="#kontakt" class="hover:text-blue-700 transition">Kontakt</a>
+        <a href="#referenzen" data-nav="referenzen" class="header-nav-link hover:text-blue-700 transition">Praxis-Referenzen</a>
+        <a href="#vorteile" data-nav="vorteile" class="header-nav-link hover:text-blue-700 transition">Vorteile</a>
+        <a href="#ueber-uns" data-nav="ueber-uns" class="header-nav-link hover:text-blue-700 transition">Über uns</a>
+        <a href="#faq" data-nav="faq" class="header-nav-link hover:text-blue-700 transition">FAQ</a>
+        <a href="#kontakt" data-nav="kontakt" class="header-nav-link hover:text-blue-700 transition">Kontakt</a>
       </nav>
 
-      <!-- Mobile Menu Toggle Button -->
-      <div class="flex items-center">
+      <!-- Desktop Header Primary Action Button & Mobile Menu Toggle -->
+      <div class="flex items-center gap-3">
+        <a href="#kontakt" class="hidden lg:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-blue-600 text-white font-bold text-xs shadow-xs hover:shadow-md hover:shadow-blue-600/20 transition-all duration-200 hover:-translate-y-0.5">
+          <span>Live-Demo anfragen</span>
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </a>
         <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition border border-slate-200" aria-label="Menü öffnen">
           <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -1388,13 +1445,18 @@
     </div>
 
     <!-- Mobile Dropdown Menu -->
-    <div id="mobileMenu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-3 shadow-lg">
-      <a href="#produkte" onclick="toggleMobileMenu()" class="block py-2 text-sm font-medium text-slate-700 hover:text-blue-600">Kernprodukte (SaaS)</a>
-      <a href="#referenzen" onclick="toggleMobileMenu()" class="block py-2 text-sm font-medium text-slate-700 hover:text-blue-600">Praxis-Referenzen &amp; Portfolio</a>
-      <a href="#vorteile" onclick="toggleMobileMenu()" class="block py-2 text-sm font-medium text-slate-700 hover:text-blue-600">Vorteile für Verwaltungen</a>
-      <a href="#ueber-uns" onclick="toggleMobileMenu()" class="block py-2 text-sm font-medium text-slate-700 hover:text-blue-600">Über uns</a>
-      <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 text-sm font-medium text-slate-700 hover:text-blue-600">Häufige Fragen (FAQ)</a>
-      <a href="#kontakt" onclick="toggleMobileMenu()" class="block py-2 text-sm font-medium text-slate-700 hover:text-blue-600">Kontakt &amp; Demo</a>
+    <div id="mobileMenu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-2.5 shadow-lg">
+      <a href="#produkte" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">Kernprodukte (InnForum &amp; Stratum)</a>
+      <a href="#referenzen" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">Praxis-Referenzen &amp; Portfolio</a>
+      <a href="#vorteile" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">Vorteile für Verwaltungen</a>
+      <a href="#ueber-uns" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">Über uns</a>
+      <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">Häufige Fragen (FAQ)</a>
+      <div class="pt-2 border-t border-slate-100">
+        <a href="#kontakt" onclick="toggleMobileMenu()" class="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-sm transition">
+          <span>Kostenloses Erstgespräch &amp; Demo</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -1409,14 +1471,14 @@
           
           <!-- Trust Badge -->
           <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/80 text-blue-800 text-xs sm:text-sm font-medium shadow-xs transition duration-200 hover:border-blue-300">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/80 text-blue-800 text-xs sm:text-sm font-semibold shadow-xs transition duration-200 hover:border-blue-300">
               <span class="relative flex h-2 w-2">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
               </span>
-              <span>Kommunal- &amp; Gemeinwesen-Software</span>
+              <span>GovTech &amp; Kommunal-Software</span>
               <span class="text-blue-300">•</span>
-              <span class="font-semibold">Tirol</span>
+              <span class="font-bold">Made in Tirol</span>
             </div>
             <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-50 via-purple-50 to-blue-50 border border-indigo-200/90 text-indigo-900 text-xs font-bold shadow-xs">
               <span class="text-indigo-600">✨</span>
@@ -1425,20 +1487,20 @@
           </div>
 
           <!-- Main Headline -->
-          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-            Digitale Plattformen &amp; maßgeschneiderte Software für
-            <span class="accent-gradient-text">Gemeinden, Organisationen</span> &amp; innovative Sektoren.
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-slate-900 tracking-tight leading-[1.13]">
+            Digitale Plattformen &amp; Fach-KI für
+            <span class="accent-gradient-text">moderne Gemeinden, Verbände</span> &amp; soziale Träger.
           </h1>
 
           <!-- Subline -->
           <p class="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            Schlüsselfertige Plattformen (InnForum &amp; Stratum) mit <strong>integrierter Verwaltungs-KI</strong> für Bürgerbeteiligung, Sozialatlas &amp; Projektmanagement – praxiserprobt, entlastend und 100 % DSGVO-konform.
+            Vom interaktiven Sozialatlas und barrierefreier Bürgerbeteiligung (<strong>InnForum</strong>) bis zur KI-gestützten Projekt- und Förderzentrale (<strong>Stratum</strong>) – aus der kommunalen Praxis entwickelt, sofort einsatzbereit und 100 % DSGVO-konform.
           </p>
 
           <!-- CTA Action Buttons -->
           <div class="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3 pt-2">
             <a href="#kontakt" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl btn-shimmer text-white font-semibold text-base shadow-lg shadow-blue-600/25 transition duration-200 hover:-translate-y-0.5 active:scale-98">
-              <span>Kostenloses Erstgespräch</span>
+              <span>Unverbindliches Erstgespräch</span>
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
               </svg>
@@ -1455,19 +1517,42 @@
           <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs font-semibold text-slate-600">
             <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-xs">
               <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>📱 Inkl. vollwertiger PWA-Mobile-Apps (iOS &amp; Android)</span>
+              <span>📱 Web &amp; Mobile PWA (iOS &amp; Android ohne App-Store)</span>
             </span>
             <span class="hidden sm:inline-flex items-center gap-1.5 text-slate-500 text-xs font-normal">
-              <span>⚡ Kein App-Store-Zwang</span>
-              <span>•</span>
               <span>📶 Offline-fähig</span>
               <span>•</span>
-              <span>🔒 100 % DSGVO</span>
+              <span>🔒 EU-Hosting Frankfurt</span>
             </span>
+          </div>
+
+          <!-- Compact Mobile/Tablet Hero Visual Showcase (visible below lg) -->
+          <div class="lg:hidden pt-4 max-w-lg mx-auto">
+            <div onclick="openGallery('all', 0)" class="browser-frame glow-blue cursor-pointer relative group" title="Klicken für interaktive Vollbild-Galerie">
+              <div class="browser-frame-bar justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="browser-dot browser-dot-red"></span>
+                  <span class="browser-dot browser-dot-yellow"></span>
+                  <span class="browser-dot browser-dot-green"></span>
+                </div>
+                <div class="browser-url-pill">
+                  <svg class="w-2.5 h-2.5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                  <span>innforum.at • stratum.co.at</span>
+                </div>
+                <span class="text-[9px] font-bold text-blue-600 uppercase tracking-wider">29 ANSICHTEN</span>
+              </div>
+              <div class="relative overflow-hidden">
+                <img src="screenshots/innforum-netzwerk.png" alt="CivicFlow Plattform-Vorschau: InnForum Netzwerk &amp; Sozialatlas" loading="eager">
+                <div class="absolute bottom-2.5 right-2.5 px-3 py-1.5 rounded-full bg-slate-900/85 backdrop-blur-xs text-white text-[11px] font-bold flex items-center gap-1.5 shadow-lg border border-white/15">
+                  <svg class="w-3.5 h-3.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                  <span>Live-Galerie öffnen (29)</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Right: Floating Product Screenshots with Ambient Glow & Glass Badges -->
+        <!-- Right: Floating Product Screenshots with Ambient Glow (Desktop lg+) -->
         <div class="relative hidden lg:block" style="min-height: 420px;">
 
           <!-- Floating Ambient Light Orbs behind Mockups -->
@@ -1475,7 +1560,7 @@
           <div class="absolute -bottom-10 -left-12 w-80 h-80 bg-gradient-to-tr from-cyan-500/20 via-blue-500/15 to-indigo-600/20 rounded-full blur-3xl -z-10 pointer-events-none hero-ambient-orb-2"></div>
 
           <!-- Front: InnForum Netzwerk Mockup -->
-          <div class="absolute top-0 right-0 w-[95%] float-up z-10">
+          <div onclick="openGallery('innforum', 4)" class="absolute top-0 right-0 w-[95%] float-up z-10 cursor-pointer" title="Klicken zum Vergrößern">
             <div class="browser-frame glow-blue relative">
               
               <!-- Browser Toolbar with URL Pill -->
@@ -1492,14 +1577,14 @@
                   <svg class="w-2.5 h-2.5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                   <span>https://innforum.at/netzwerk</span>
                 </div>
-                <span class="text-[9px] font-bold text-blue-600 uppercase tracking-wider hidden sm:inline">LIVE PLATTFORM</span>
+                <span class="text-[9px] font-bold text-blue-600 uppercase tracking-wider hidden sm:inline">INNFORUM</span>
               </div>
               <img src="screenshots/innforum-netzwerk.png" alt="InnForum Netzwerk-Visualisierung: Soziale Einrichtungen, Akteure und Lebenslagen-Zonen auf einen Blick" loading="eager">
             </div>
           </div>
 
           <!-- Back: Stratum Roadmap Mockup -->
-          <div class="absolute -bottom-4 -left-6 w-[65%] float-up-delay z-0">
+          <div onclick="openGallery('stratum', 5)" class="absolute -bottom-4 -left-6 w-[65%] float-up-delay z-0 cursor-pointer" title="Klicken zum Vergrößern">
             <div class="browser-frame glow-indigo" style="transform: rotate(-2deg);">
               <div class="browser-frame-bar justify-between">
                 <div class="flex items-center gap-1.5">
@@ -1541,7 +1626,7 @@
             <span class="text-base">✨</span>
           </div>
           <div>
-            <div class="text-xs font-bold text-slate-900 flex items-center gap-1"><span>Integrierte Fach-KI</span><span class="text-[9px] px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-700 font-black">NEU</span></div>
+            <div class="text-xs font-bold text-slate-900 flex items-center gap-1"><span>Integrierte Fach-KI</span><span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 font-black">NEU</span></div>
             <div class="text-[11px] text-slate-500">Flyer-Scan &amp; Voice-to-Task</div>
           </div>
         </div>
@@ -1569,8 +1654,6 @@
             <div class="text-[11px] text-slate-500">Schlüsselfertige SaaS &amp; PWA</div>
           </div>
         </div>
-      </div>
-
       </div>
 
     </div>
@@ -1677,27 +1760,38 @@
           Schlüsselfertige, praxiserprobte Software-Lösungen, die Sie als hochsichere Cloud-Plattform (SaaS) für Ihre Region, Ihren Planungsverband oder Ihre NPO lizenzieren können – inklusive kontinuierlicher Weiterentwicklung, verlässlichem Support und 100 % DSGVO-konformem EU-Hosting in Frankfurt am Main.
         </p>
 
-        <!-- AI Innovation Callout Bar -->
-        <div class="mt-6 p-4 rounded-2xl bg-gradient-to-r from-indigo-50/90 via-blue-50/90 to-cyan-50/90 border border-indigo-200/90 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
-          <div class="flex items-center gap-3">
-            <span class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-500 text-white flex items-center justify-center text-lg shrink-0 shadow-md shadow-indigo-500/20">✨</span>
+        <!-- Kompakter Verwaltungs-Realitätscheck (Vorher vs. Nachher) + KI-Highlight -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3.5 text-left">
+          <!-- Vorher -->
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-2xs flex items-start gap-3">
+            <span class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">✕</span>
             <div>
-              <div class="text-xs sm:text-sm font-bold text-slate-900">Integrierte kommunale Fach-KI für spürbare Entlastung</div>
-              <div class="text-[11px] sm:text-xs text-slate-600">Flyer-Scan per Foto, Voice-to-Task per Sprachmemo, automatischer Audio-Podcast, barrierefreie Leichte Sprache (A2) &amp; förderkonforme Berichte.</div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-rose-700 mb-1">Typischer Alltag ohne CivicFlow</div>
+              <p class="text-xs text-slate-600 leading-relaxed">Veraltete Excel-Listen, verstreute PDF-Flyer, mühsame Berichtspflichten in Word und teure US-Einzellizenzen ohne DSGVO-Schutzschild.</p>
             </div>
           </div>
-          <span class="px-3 py-1 rounded-full bg-white text-indigo-700 text-[11px] font-extrabold border border-indigo-200 shadow-2xs whitespace-nowrap shrink-0">100 % DSGVO • Zero-Data-Training</span>
+          <!-- Nachher -->
+          <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-50/90 via-indigo-50/80 to-emerald-50/70 border border-blue-200/90 shadow-xs flex items-start gap-3">
+            <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-xs">✓</span>
+            <div>
+              <div class="flex items-center gap-2 flex-wrap mb-1">
+                <span class="text-xs font-extrabold uppercase tracking-wider text-blue-900">Mit InnForum &amp; Stratum + Fach-KI</span>
+                <span class="px-2 py-0.5 rounded-full bg-white text-indigo-700 text-[10px] font-extrabold border border-indigo-200">Zero-Data-Training</span>
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">1-Klick Flyer-Scan, Voice-to-Task Sprachmemos, barrierefreie Leichte Sprache (A2), synchrone Projektboards &amp; fertige Word-/PPTX-Gremienberichte.</p>
+            </div>
+          </div>
         </div>
 
         <!-- Schnell-Navigation zu den Produkten -->
         <div class="pt-2 flex flex-wrap justify-center gap-3">
           <a href="#innforum" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold border border-blue-200 transition">
-            <span>Plattform 01: InnForum</span>
+            <span>Plattform 01: InnForum (Bürger &amp; Sozialraum)</span>
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </a>
           <a href="#stratum" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold border border-indigo-200 transition">
-            <span>Plattform 02: Stratum</span>
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <span>Plattform 02: Stratum (Projekte &amp; Steuerung)</span>
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </a>
         </div>
       </div>
@@ -1710,7 +1804,7 @@
           <div class="absolute -top-32 -right-32 w-80 h-80 bg-blue-400/15 rounded-full blur-3xl pointer-events-none -z-0"></div>
           <div class="absolute -bottom-32 -left-32 w-80 h-80 bg-cyan-400/10 rounded-full blur-3xl pointer-events-none -z-0"></div>
 
-          <!-- Top Tag & Meta-Leiste -->
+          <!-- Top Tag & Meta-Leiste (Aufgeräumte Executive-Hierarchie) -->
           <div class="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-blue-100 relative z-10">
             <div class="flex flex-wrap items-center gap-2.5">
               <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-600 text-white text-xs font-bold shadow-xs">
@@ -1718,21 +1812,14 @@
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-300 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                 </span>
-                Lizenzprodukt (SaaS)
+                Plattform 01 • SaaS-Lizenz
               </span>
-              <span class="px-3 py-1 rounded-full bg-blue-100/80 text-blue-800 text-xs font-bold">
-                Plattform 01
-              </span>
-              <span class="px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 text-indigo-900 border border-indigo-200 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+              <span class="px-3 py-1 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 text-indigo-900 border border-indigo-200 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
                 <span>✨</span>
-                <span>Multimodale Bürger-KI</span>
-              </span>
-              <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200/80 flex items-center gap-1.5">
-                <span>📱</span>
-                <span>iOS &amp; Android PWA (Mobile App)</span>
+                <span>Multimodale Bürger-KI &amp; Mobile PWA</span>
               </span>
               <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium">
-                Zielgruppe: Planungsverbände, Sozialregionen, Träger &amp; Verwaltungen
+                Für Gemeinden, Planungsverbände, Sozialregionen &amp; Träger
               </span>
             </div>
 
@@ -2202,7 +2289,7 @@
                 <span class="font-normal text-slate-500 lowercase">(Klicken zum Vergrößern)</span>
               </span>
               <button onclick="openGallery('innforum', 0)" class="text-xs font-semibold text-blue-700 hover:text-blue-900 transition flex items-center gap-1 cursor-pointer">
-                <span>Alle 29 Ansichten in der Galerie öffnen</span>
+                <span>Alle 15 InnForum-Ansichten in der Galerie öffnen</span>
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
               </button>
             </div>
@@ -2561,34 +2648,37 @@
         </div>
       </div>
 
-      <!-- ==================== 🌊 FLUID FLOW TRANSITION: INNFORUM ➔ STRATUM ==================== -->
-      <div class="liquid-transition-wrapper" aria-hidden="true">
-        <div class="liquid-flow-orb"></div>
+      <!-- ==================== 🌊 FLUID FLOW TRANSITION: INNFORUM ➔ STRATUM (SYNERGIE-BRÜCKE) ==================== -->
+      <div class="liquid-transition-wrapper">
+        <div class="liquid-flow-orb" aria-hidden="true"></div>
         
-        <div class="relative z-10 flex flex-col items-center justify-center text-center">
+        <div class="relative z-10 flex flex-col items-center justify-center text-center px-4">
           <!-- Upper Stream Line coming from InnForum -->
-          <div class="liquid-flow-line"></div>
+          <div class="liquid-flow-line" aria-hidden="true"></div>
 
-          <!-- Central Flow Pill -->
-          <div class="my-3">
-            <div class="liquid-flow-pill">
+          <!-- Central Flow Pill + Synergy Context -->
+          <div class="my-3 space-y-2.5 max-w-2xl">
+            <div class="liquid-flow-pill mx-auto w-fit">
               <span class="relative flex h-2 w-2">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
               </span>
               <div class="flex items-center gap-2 text-xs font-semibold text-white tracking-wide">
-                <span class="text-blue-300">Öffentliches Bürgerportal</span>
+                <span class="text-blue-300">InnForum: Außenwirkung &amp; Bürgerdialog</span>
                 <svg class="w-3.5 h-3.5 text-indigo-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-cyan-300 font-bold">Administrative Führungszentrale</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-cyan-300 font-bold">Stratum: Interne Steuerung &amp; Projekte</span>
               </div>
             </div>
+            <p class="text-xs text-slate-500 font-medium">
+              <strong>Einzeln lizenzierbar oder im Zusammenspiel:</strong> Während InnForum Angebote, Bürgerbeteiligung und Sozialmonitoring sichtbar macht, übersetzt Stratum kommunale Vorhaben in strukturierte Projekte, Fristen und prüfsichere Förderberichte.
+            </p>
           </div>
 
           <!-- Lower Stream Line pouring into Stratum -->
-          <div class="liquid-flow-line-bottom"></div>
+          <div class="liquid-flow-line-bottom" aria-hidden="true"></div>
 
           <!-- Curved Liquid Wave contour -->
-          <div class="liquid-stream-curve pt-1">
+          <div class="liquid-stream-curve pt-1" aria-hidden="true">
             <svg viewBox="0 0 600 40" fill="none" class="w-full h-8">
               <path d="M0,0 C150,38 450,38 600,0" stroke="url(#liquidStreamGrad)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4 6"/>
               <defs>
@@ -2614,7 +2704,7 @@
           <div class="absolute top-1/2 -left-32 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl pointer-events-none -z-0"></div>
           <div class="absolute -bottom-32 right-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none -z-0"></div>
 
-          <!-- Top Tag & Meta-Leiste -->
+          <!-- Top Tag & Meta-Leiste (Aufgeräumte Executive-Hierarchie) -->
           <div class="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-slate-800/90 relative z-10">
             <div class="flex flex-wrap items-center gap-2.5">
               <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-600 text-white text-xs font-bold shadow-md shadow-indigo-600/40">
@@ -2622,21 +2712,14 @@
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-300 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                 </span>
-                Lizenzprodukt (SaaS)
-              </span>
-              <span class="px-3 py-1 rounded-full bg-indigo-950/80 text-indigo-300 border border-indigo-800/60 text-xs font-bold">
-                Plattform 02
+                Plattform 02 • SaaS-Lizenz
               </span>
               <span class="px-3 py-1 rounded-full bg-gradient-to-r from-purple-950/90 to-indigo-950/90 text-purple-300 border border-purple-700/60 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
                 <span>✨</span>
-                <span>KI-Assistenz-Hub &amp; Voice-to-Task</span>
-              </span>
-              <span class="px-3 py-1 rounded-full bg-slate-900/90 text-indigo-200 text-xs font-semibold border border-indigo-500/30 flex items-center gap-1.5">
-                <span>📱</span>
-                <span>iOS &amp; Android PWA (Mobile App)</span>
+                <span>KI-Voice-to-Task &amp; Mobile PWA</span>
               </span>
               <span class="px-3 py-1 rounded-full bg-slate-900/90 text-slate-300 text-xs font-medium border border-slate-800">
-                Zielgruppe: NPOs, Trägervereine, Verbundprojekte, Quartiersarbeit &amp; Initiativen
+                Für Gemeinden, Verwaltungen, Verbände, NPOs &amp; Förderprojekte
               </span>
             </div>
 
@@ -2660,23 +2743,32 @@
                   <span class="text-[11px] font-semibold text-slate-400">Stratum Edition</span>
                 </div>
                 <h3 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Stratum</h3>
-                <p class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-100 font-bold text-base sm:text-lg">Kollaboratives Projektmanagement für NPOs &amp; Gemeinwesen</p>
+                <p class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-100 font-bold text-base sm:text-lg">Kollaboratives Projekt- &amp; Aufgabenmanagement für Gemeinden, Verbände &amp; NPOs</p>
               </div>
             </div>
 
             <p class="text-slate-300 text-base sm:text-lg leading-relaxed font-normal">
-              Stratum wurde speziell für geförderte Verbundprojekte, Quartiersmanagement und gemeinnützige Träger entwickelt (z. B. LEADER, ESF oder Regionalförderung). Es vereint 22 native Arbeitsansichten, **integrierte KI-Projektworkshops, Voice-to-Task Sprachmemos und förderkonforme Berichterstattung** in einer gemeinsamen, synchronen Arbeitsumgebung – ohne teure US-Zusatzabos und ohne Zersplitterung über unzählige Einzellizenzen.
+              Stratum wurde speziell für kommunale Verwaltungen, geförderte Verbundprojekte, Quartiersmanagement und gemeinnützige Träger entwickelt (z. B. LEADER, ESF oder Regionalförderung). Es vereint 22 native Arbeitsansichten, <strong class="text-white">integrierte KI-Projektworkshops, Voice-to-Task Sprachmemos und förderkonforme Berichterstattung</strong> in einer gemeinsamen, synchronen Arbeitsumgebung – ohne teure US-Zusatzabos und ohne Zersplitterung über unzählige Einzellizenzen.
             </p>
+          </div>
+
+          <!-- Hinweis für interaktive Detail-Ansicht -->
+          <div class="flex items-center gap-2 mb-4 text-xs font-semibold text-indigo-300 bg-indigo-950/70 border border-indigo-800/70 px-3.5 py-1.5 rounded-full w-fit relative z-10">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-400"></span>
+            </span>
+            <span>Tipp: Klicken Sie auf eines der 8 Module für ausführliche Detail-Informationen &amp; Praxisnutzen</span>
           </div>
 
           <!-- 8 Funktions-Module im Detail -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 relative z-10">
             
             <!-- Modul 1: 22 Native Ansichten -->
-            <div class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group">
+            <div onclick="openStratumFeatureModal(0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStratumFeatureModal(0);}" class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group cursor-pointer" title="Klicken für Modul-Details">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="w-9 h-9 rounded-xl bg-indigo-950/80 text-indigo-400 border border-indigo-800/60 flex items-center justify-center">
+                  <span class="w-9 h-9 rounded-xl bg-indigo-950/80 text-indigo-400 border border-indigo-800/60 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-950/90 text-indigo-300 border border-indigo-800/60">Single Source of Truth</span>
@@ -2686,13 +2778,17 @@
                   Gantt-Roadmap mit Meilensteinen &amp; Abhängigkeiten, Kanban-Boards, dynamische Mindmaps, Kalender, Listen &amp; Netzwerkgraph – alle in Echtzeit synchron ohne teure Plugins.
                 </p>
               </div>
+              <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-bold text-indigo-400 group-hover:text-indigo-200 transition">
+                <span>Modul im Detail ansehen</span>
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-indigo-950/90 group-hover:bg-indigo-600 group-hover:text-white transition">→</span>
+              </div>
             </div>
 
             <!-- Modul 2: KI-Sprachmemo & Smart Import -->
-            <div class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group border border-purple-500/40 shadow-lg shadow-purple-950/40 relative">
+            <div onclick="openStratumFeatureModal(1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStratumFeatureModal(1);}" class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group border border-purple-500/40 shadow-lg shadow-purple-950/40 relative cursor-pointer" title="Klicken für Modul-Details">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="w-9 h-9 rounded-xl bg-purple-950/80 text-purple-400 border border-purple-800/60 flex items-center justify-center">
+                  <span class="w-9 h-9 rounded-xl bg-purple-950/80 text-purple-400 border border-purple-800/60 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-900/90 text-purple-200 border border-purple-700/80 flex items-center gap-1"><span>✨</span><span>KI-Voice-to-Task</span></span>
@@ -2702,13 +2798,17 @@
                   Sprachnotizen direkt vor Ort (Baustelle, Bürgergespräch) aufsprechen: Die KI transkribiert und wandelt gesprochene Sprache vollautomatisch in strukturierte Aufgaben mit Fristen, Zuweisungen und Meilensteinen im Gantt-Chart um. Eingehende E-Mails und PDFs werden automatisch eingepflegt.
                 </p>
               </div>
+              <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-bold text-purple-300 group-hover:text-purple-200 transition">
+                <span>Modul im Detail ansehen</span>
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-purple-950/90 group-hover:bg-purple-600 group-hover:text-white transition">→</span>
+              </div>
             </div>
 
             <!-- Modul 3: Concept Builder & 17-Felder Canvas -->
-            <div class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group">
+            <div onclick="openStratumFeatureModal(2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStratumFeatureModal(2);}" class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group cursor-pointer" title="Klicken für Modul-Details">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="w-9 h-9 rounded-xl bg-rose-950/80 text-rose-400 border border-rose-800/60 flex items-center justify-center">
+                  <span class="w-9 h-9 rounded-xl bg-rose-950/80 text-rose-400 border border-rose-800/60 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-950/90 text-rose-300 border border-rose-800/60 flex items-center gap-1"><span>✨</span><span>Geführte KI-Workshops</span></span>
@@ -2718,13 +2818,17 @@
                   Geführte KI-Workshops für Förderanträge: Vision, Wirkungslogik (Theory of Change), Stakeholder-Mapping, Partizipations-Monitor, SWOT, RACI und Budgetierung auf Knopfdruck erarbeiten. Nie wieder „Blank-Canvas-Syndrom“.
                 </p>
               </div>
+              <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-bold text-rose-300 group-hover:text-rose-200 transition">
+                <span>Modul im Detail ansehen</span>
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-rose-950/90 group-hover:bg-rose-600 group-hover:text-white transition">→</span>
+              </div>
             </div>
 
             <!-- Modul 4: Strategische Analysen & Matrizen -->
-            <div class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group">
+            <div onclick="openStratumFeatureModal(3)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStratumFeatureModal(3);}" class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group cursor-pointer" title="Klicken für Modul-Details">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="w-9 h-9 rounded-xl bg-amber-950/80 text-amber-400 border border-amber-800/60 flex items-center justify-center">
+                  <span class="w-9 h-9 rounded-xl bg-amber-950/80 text-amber-400 border border-amber-800/60 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-950/90 text-amber-300 border border-amber-800/60">Impact-Effort 2x2</span>
@@ -2734,13 +2838,17 @@
                   Interaktive 2x2 Impact-Effort-Matrix trennt Quick Wins von zeitraubenden Aufgaben. RACI-Matrix regelt Verantwortlichkeiten glasklar. Inklusive hochauflösendem Bild-Export für Vorstände.
                 </p>
               </div>
+              <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-bold text-amber-300 group-hover:text-amber-200 transition">
+                <span>Modul im Detail ansehen</span>
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-950/90 group-hover:bg-amber-600 group-hover:text-white transition">→</span>
+              </div>
             </div>
 
             <!-- Modul 5: Druckreife Berichte (.docx) -->
-            <div class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group">
+            <div onclick="openStratumFeatureModal(4)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStratumFeatureModal(4);}" class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group cursor-pointer" title="Klicken für Modul-Details">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="w-9 h-9 rounded-xl bg-blue-950/80 text-blue-400 border border-blue-800/60 flex items-center justify-center">
+                  <span class="w-9 h-9 rounded-xl bg-blue-950/80 text-blue-400 border border-blue-800/60 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-950/90 text-blue-300 border border-blue-800/60 flex items-center gap-1"><span>✨</span><span>Förderkonforme KI-Berichte</span></span>
@@ -2750,13 +2858,17 @@
                   Prüfsichere Zwischen- und Endberichte für LEADER, Land &amp; Bund: Die KI fasst Meilensteine, Aufgaben und Kennzahlen zusammen und generiert fertige Word- (.docx) und PDF-Dokumente mit offiziellem Gemeindebriefkopf und Bilddokumentation.
                 </p>
               </div>
+              <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-bold text-blue-300 group-hover:text-blue-200 transition">
+                <span>Modul im Detail ansehen</span>
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-950/90 group-hover:bg-blue-600 group-hover:text-white transition">→</span>
+              </div>
             </div>
 
             <!-- Modul 6: DSGVO-Schutzschild Web-Freigabe -->
-            <div class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group">
+            <div onclick="openStratumFeatureModal(5)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStratumFeatureModal(5);}" class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group cursor-pointer" title="Klicken für Modul-Details">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="w-9 h-9 rounded-xl bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 flex items-center justify-center">
+                  <span class="w-9 h-9 rounded-xl bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950/90 text-emerald-300 border border-emerald-800/60 flex items-center gap-1"><span>🛡️</span><span>DSGVO PII-Sanitizer</span></span>
@@ -2766,13 +2878,17 @@
                   Datenschutz-Schutzschild mit automatischer Echtzeit-Maskierung: Interne Notizen und personenbezogene Daten (PII) werden vor externen Freigaben sowie vor KI-Aufrufen geschwärzt. Null Training auf Kundendaten, Hosting in Frankfurt am Main.
                 </p>
               </div>
+              <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-bold text-emerald-300 group-hover:text-emerald-200 transition">
+                <span>Modul im Detail ansehen</span>
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-950/90 group-hover:bg-emerald-600 group-hover:text-white transition">→</span>
+              </div>
             </div>
 
             <!-- Modul 7: Projekt-Zeitmaschine -->
-            <div class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group">
+            <div onclick="openStratumFeatureModal(6)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStratumFeatureModal(6);}" class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group cursor-pointer" title="Klicken für Modul-Details">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="w-9 h-9 rounded-xl bg-teal-950/80 text-teal-400 border border-teal-800/60 flex items-center justify-center">
+                  <span class="w-9 h-9 rounded-xl bg-teal-950/80 text-teal-400 border border-teal-800/60 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-950/90 text-teal-300 border border-teal-800/60">Snapshot-Rollback</span>
@@ -2782,13 +2898,17 @@
                   Revisionssichere inkrementelle Historie: Versehentlich gelöschte Karten oder veränderte Datenstände können mit einem Klick auf jeden beliebigen früheren Zeitpunkt wiederhergestellt werden.
                 </p>
               </div>
+              <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-bold text-teal-300 group-hover:text-teal-200 transition">
+                <span>Modul im Detail ansehen</span>
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-950/90 group-hover:bg-teal-600 group-hover:text-white transition">→</span>
+              </div>
             </div>
 
             <!-- Modul 8: Offline PWA & Zeiterfassung -->
-            <div class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group">
+            <div onclick="openStratumFeatureModal(7)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStratumFeatureModal(7);}" class="stratum-card-dark p-5 rounded-2xl flex flex-col justify-between group cursor-pointer" title="Klicken für Modul-Details">
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="w-9 h-9 rounded-xl bg-slate-800/90 text-slate-300 border border-slate-700 flex items-center justify-center">
+                  <span class="w-9 h-9 rounded-xl bg-slate-800/90 text-slate-300 border border-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">Offline PWA</span>
@@ -2797,6 +2917,10 @@
                 <p class="text-xs text-slate-300 leading-relaxed">
                   Progressive Web App mit voller Offline-Fähigkeit für den Außendienst ohne Netz. Plus: Integrierter Live-Timer für Aufgaben mit Soll/Ist-Stundenvergleich für Förderabrechnungen.
                 </p>
+              </div>
+              <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-bold text-slate-300 group-hover:text-white transition">
+                <span>Modul im Detail ansehen</span>
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-800 group-hover:bg-indigo-600 group-hover:text-white transition">→</span>
               </div>
             </div>
 
@@ -2812,7 +2936,7 @@
                 <span class="font-normal text-slate-400 lowercase">(Klicken zum Vergrößern)</span>
               </span>
               <button onclick="openGallery('stratum', 0)" class="text-xs font-semibold text-indigo-300 hover:text-white transition flex items-center gap-1 cursor-pointer bg-slate-900/80 hover:bg-slate-800 px-3.5 py-1.5 rounded-lg border border-slate-800 hover:border-indigo-500/50">
-                <span>Alle 29 Ansichten in der Galerie öffnen</span>
+                <span>Alle 12 Stratum-Ansichten in der Galerie öffnen</span>
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
               </button>
             </div>
@@ -3064,7 +3188,7 @@
                 </div>
                 <div class="mt-3">
                   <div class="text-xs font-bold text-white">Mobiles Aufgaben-Board</div>
-                  <div class="text-[10px] text-slate-400 mt-0.5">Tagesfokus &amp; ELAK-Fristen im Griff</div>
+                  <div class="text-[10px] text-slate-400 mt-0.5">Tagesfokus &amp; Projekt-Fristen im Griff</div>
                 </div>
               </div>
 
@@ -3117,13 +3241,6 @@
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="none">
       <path d="M0,20 C240,50 480,0 720,30 C960,60 1200,10 1440,25 L1440,60 L0,60 Z" fill="#F8FAFC"/>
     </svg>
-  </div>
-
-  <!-- Flow Conduit: Products → Referenzen -->
-  <div class="flow-conduit" aria-hidden="true">
-    <div class="flow-conduit-line-top"></div>
-    <div class="flow-conduit-bead"></div>
-    <div class="flow-conduit-line-bottom"></div>
   </div>
 
   <!-- ==================== 5. PRAXIS-REFERENZEN & INDIVIDUALLÖSUNGEN ==================== -->
@@ -3309,13 +3426,6 @@
     </svg>
   </div>
 
-  <!-- Flow Conduit: Referenzen → Vorteile -->
-  <div class="flow-conduit" aria-hidden="true">
-    <div class="flow-conduit-line-top"></div>
-    <div class="flow-conduit-bead"></div>
-    <div class="flow-conduit-line-bottom"></div>
-  </div>
-
   <!-- ==================== 6. VORTEILE FÜR KOMMUNEN ==================== -->
   <section id="vorteile" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -3390,34 +3500,34 @@
       <div class="text-center max-w-2xl mx-auto mb-10 space-y-2 reveal">
         <span class="text-xs font-bold uppercase tracking-widest text-blue-400">Das CivicFlow Qualitätsversprechen</span>
         <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-          Verlässliche Rahmenbedingungen für Ihren öffentlichen Auftrag.
+          Messbare Leistungsstärke für Ihren öffentlichen Auftrag.
         </h3>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 text-center">
         
         <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs space-y-2 reveal">
-          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="100" data-suffix="%">0</div>
-          <div class="text-xs font-bold text-white uppercase tracking-wider">DSGVO &amp; Datensouveränität</div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">EU-Hosting in Frankfurt am Main, vollständiger AVV gem. Art. 28 DSGVO für Gemeinden.</p>
+          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="100" data-suffix=" %">0</div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider">DSGVO &amp; EU-Hosting</div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">ISO-27001 Server in Frankfurt am Main, AVV gem. Art. 28 DSGVO &amp; Zero-Data-Training.</p>
         </div>
         
         <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs space-y-2 reveal delay-100">
-          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="1" data-suffix="">0</div>
-          <div class="text-xs font-bold text-white uppercase tracking-wider">Fester Ansprechpartner</div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">Persönliche Begleitung &amp; Mitarbeiterschulungen vor Ort durch den Entwickler – kein anonymes Callcenter.</p>
+          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="22" data-suffix="">0</div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider">Synchrone Fachansichten</div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">Gantt-Roadmap, Kanban, Sozialatlas, KI-Hub, 17-Felder-Canvas &amp; 1-Klick Word-/PPTX-Berichte.</p>
         </div>
         
         <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs space-y-2 reveal delay-200">
-          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="100" data-suffix="%">0</div>
-          <div class="text-xs font-bold text-white uppercase tracking-wider">Praxiserprobt</div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">Direkt aus der Gemeinwesenarbeit in Tirol für reale kommunale Arbeits- und Verwaltungsabläufe entwickelt.</p>
+          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="55" data-suffix="+">0</div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider">Sprachen &amp; A2-Inklusion</div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">Barrierefrei nach WZG / WCAG 2.1 AA, Leichte Sprache (A2), Audio-Podcast &amp; Sinntreue-Wächter.</p>
         </div>
         
         <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs space-y-2 reveal delay-300">
-          <div class="text-3xl sm:text-4xl font-extrabold text-white h-[48px] sm:h-[60px] flex items-center justify-center tracking-tight">Direkt</div>
-          <div class="text-xs font-bold text-white uppercase tracking-wider">Schnelle Reaktionszeit</div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">Zügige Rückmeldungen, persönliche Erreichbarkeit und verlässlicher Support auf kurzem Dienstweg.</p>
+          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-prefix="&lt; " data-target="24" data-suffix="h">0</div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider">Persönliche Reaktionszeit</div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">Direkte Begleitung, Vor-Ort-Schulungen und Support durch den Gründer ohne anonymes Callcenter.</p>
         </div>
 
       </div>
@@ -3429,13 +3539,6 @@
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="none">
       <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,60 L0,60 Z" fill="#F8FAFC"/>
     </svg>
-  </div>
-
-  <!-- Flow Conduit: Counter → Über uns -->
-  <div class="flow-conduit" aria-hidden="true">
-    <div class="flow-conduit-line-top"></div>
-    <div class="flow-conduit-bead"></div>
-    <div class="flow-conduit-line-bottom"></div>
   </div>
 
   <!-- ==================== 7. ÜBER UNS & GRÜNDER ==================== -->
@@ -3464,39 +3567,56 @@
           </div>
         </div>
 
-        <!-- Right: Seal & Facts Box -->
+        <!-- Right: Executive Founder Profile & Qualification Box -->
         <div class="lg:col-span-5 reveal delay-100">
-          <div class="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white shadow-xl space-y-6">
+          <div class="p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 text-white shadow-2xl border border-slate-800 space-y-6 relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-48 h-48 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
             
-            <div class="flex items-center gap-4 border-b border-slate-700 pb-5">
-              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border border-slate-700/80 shadow-xl shrink-0 bg-[#060B18]">
-                <img src="civicflow-logo-dark.jpg" alt="CivicFlow Technologies Logo" class="w-full h-full object-cover">
+            <div class="flex items-center gap-4 border-b border-slate-800 pb-5 relative z-10">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 p-[2px] shadow-lg shadow-blue-600/25 shrink-0">
+                <div class="w-full h-full rounded-[14px] bg-slate-950 flex flex-col items-center justify-center">
+                  <span class="text-xl sm:text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-cyan-300">LF</span>
+                  <span class="text-[8px] font-bold uppercase tracking-widest text-blue-400">Founder</span>
+                </div>
               </div>
               <div>
-                <h4 class="font-bold text-lg text-white">Lukas Falch</h4>
-                <p class="text-xs text-blue-300">CivicFlow Technologies • Telfs, Tirol</p>
-                <p class="text-[11px] text-slate-400">Gemeinwesenkoordinator &amp; Softwareentwickler</p>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold mb-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span>Persönlicher Ansprechpartner</span>
+                </div>
+                <h4 class="font-extrabold text-xl text-white tracking-tight">Lukas Falch</h4>
+                <p class="text-xs text-blue-300 font-semibold">Gründer &amp; Lead-Architekt • Telfs, Tirol</p>
               </div>
             </div>
 
-            <div class="space-y-3 text-xs text-slate-300">
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-md bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs">📍</span>
-                <span>Standort: Obermarktstraße 43a, 6410 Telfs</span>
+            <!-- 3 Kompetenz-Säulen -->
+            <div class="space-y-3 text-xs text-slate-300 relative z-10">
+              <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                <span class="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">🏛️</span>
+                <div>
+                  <div class="font-bold text-white">Kommunale Praxis &amp; Gemeinwesen</div>
+                  <div class="text-[11px] text-slate-400 leading-snug mt-0.5">Aktive Koordination in der Marktgemeinde Telfs – entwickelt aus echten Anforderungen des Verwaltungsalltags.</div>
+                </div>
               </div>
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-md bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs">🏛️</span>
-                <span>Wirtschaftskammer Tirol • Fachgruppe UBIT</span>
+              <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                <span class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">💻</span>
+                <div>
+                  <div class="font-bold text-white">Wirtschaftsingenieurwesen &amp; Informatik</div>
+                  <div class="text-[11px] text-slate-400 leading-snug mt-0.5">Moderne Full-Stack Cloud-Architektur, DSGVO-Sicherheitsdesign &amp; europäische KI-Systemintegration.</div>
+                </div>
               </div>
-              <div class="flex items-center gap-3">
-                <span class="w-6 h-6 rounded-md bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs">⚖️</span>
-                <span>IT-Dienstleistungen gem. GewO 1994 (BH Innsbruck-Land)</span>
+              <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">⚖️</span>
+                <div>
+                  <div class="font-bold text-white">Geprüfter Österreichischer IT-Partner</div>
+                  <div class="text-[11px] text-slate-400 leading-snug mt-0.5">Mitglied der WKO Tirol (Fachgruppe UBIT) • Standort Obermarktstraße 43a, 6410 Telfs.</div>
+                </div>
               </div>
             </div>
 
-            <div class="pt-4 border-t border-slate-700">
-              <a href="#kontakt" class="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition duration-200">
-                <span>Direkten Kontakt aufnehmen</span>
+            <div class="pt-2 relative z-10">
+              <a href="#kontakt" class="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-lg shadow-blue-600/25 transition duration-200">
+                <span>Unverbindliches Gespräch vereinbaren</span>
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
             </div>
@@ -3682,89 +3802,151 @@
   <section id="kontakt" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="max-w-3xl mx-auto text-center mb-12 space-y-3 reveal">
-        <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Unverbindliches Kennenlernen</span>
+      <div class="max-w-3xl mx-auto text-center mb-14 space-y-3 reveal">
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Unverbindliches Kennenlernen &amp; Live-Demo</span>
         <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Lassen Sie uns über Ihr digitales Vorhaben sprechen.
         </h2>
         <p class="text-slate-600 text-base leading-relaxed">
-          Gerne stellen wir Ihnen die CivicFlow-Lösungen in einer kurzen 20-minütigen Online-Präsentation oder persönlich vor Ort vor.
+          Gerne stellen wir Ihnen InnForum und Stratum in einer kompakten 20-minütigen Online-Präsentation oder persönlich bei Ihnen im Gemeindeamt bzw. Verband vor.
         </p>
       </div>
 
-      <div class="max-w-2xl mx-auto bg-slate-50 p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-lg reveal delay-100">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
-        <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-5">
+        <!-- Left Column: 3-Step Executive Roadmap & Direct Contact -->
+        <div class="lg:col-span-5 space-y-6 reveal">
+          <div class="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white shadow-xl border border-slate-800 space-y-6 relative overflow-hidden">
+            <div class="absolute -bottom-16 -right-16 w-44 h-44 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div>
+              <span class="text-[11px] font-extrabold uppercase tracking-widest text-blue-400">Klarer Fahrplan</span>
+              <h3 class="text-xl font-bold text-white mt-1">In 3 Schritten zum digitalen Vorsprung</h3>
+            </div>
+
+            <!-- 3 Steps -->
+            <div class="space-y-4 relative z-10">
+              <div class="flex items-start gap-3.5">
+                <span class="w-7 h-7 rounded-lg bg-blue-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-blue-600/30">1</span>
+                <div>
+                  <div class="text-xs sm:text-sm font-bold text-white">20-Minuten Live-Einblick</div>
+                  <p class="text-xs text-slate-400 leading-relaxed mt-0.5">Kompakte Präsentation der Plattformen per Video-Call oder vor Ort – zugeschnitten auf Ihre konkreten Fragestellungen.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3.5">
+                <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-indigo-600/30">2</span>
+                <div>
+                  <div class="text-xs sm:text-sm font-bold text-white">Bedarfs- &amp; Fördercheck</div>
+                  <p class="text-xs text-slate-400 leading-relaxed mt-0.5">Transparentes Lizenzangebot inkl. AVV-Vertrag (Art. 28 DSGVO) und Prüfung passender Regional- oder Digitalisierungsförderungen.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3.5">
+                <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-emerald-600/30">3</span>
+                <div>
+                  <div class="text-xs sm:text-sm font-bold text-white">Schlüsselfertiger Start &amp; Begleitung</div>
+                  <p class="text-xs text-slate-400 leading-relaxed mt-0.5">Einrichtung im Design Ihrer Region, persönliche Einschulung Ihres Teams und laufender Support auf kurzem Dienstweg.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Contact Channels -->
+            <div class="pt-5 border-t border-slate-800 space-y-3 text-xs relative z-10">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Direkter Draht zu Lukas Falch:</div>
+              <a href="tel:+4367683038308" class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition group">
+                <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm shrink-0">📞</span>
+                <div>
+                  <div class="text-[11px] text-slate-400">Telefonisch erreichbar</div>
+                  <div class="font-bold text-white group-hover:text-blue-300 transition">+43 676 83038308</div>
+                </div>
+              </a>
+              <a href="mailto:kontakt@innforum.at" class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition group">
+                <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm shrink-0">✉️</span>
+                <div>
+                  <div class="text-[11px] text-slate-400">Direkte E-Mail</div>
+                  <div class="font-bold text-white group-hover:text-indigo-300 transition">kontakt@innforum.at</div>
+                </div>
+              </a>
+              <div class="flex items-center gap-2 text-[11px] text-slate-400 pt-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>Standort: Obermarktstraße 43a, 6410 Telfs (Tirol)</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column: Contact Form -->
+        <div class="lg:col-span-7 bg-slate-50 p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-lg reveal delay-100">
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-5">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="contactName" class="block text-xs font-semibold text-slate-700 mb-1">Ihr Name *</label>
+                <input type="text" id="contactName" required placeholder="z. B. Mag. Maria Huber" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+              </div>
+              <div>
+                <label for="contactOrg" class="block text-xs font-semibold text-slate-700 mb-1">Gemeinde / Organisation *</label>
+                <input type="text" id="contactOrg" required placeholder="z. B. Marktgemeinde, Verband oder Träger" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="contactEmail" class="block text-xs font-semibold text-slate-700 mb-1">E-Mail-Adresse *</label>
+                <input type="email" id="contactEmail" required placeholder="name@gemeinde.at" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+              </div>
+              <div>
+                <label for="contactPhone" class="block text-xs font-semibold text-slate-700 mb-1">Telefonnummer (optional)</label>
+                <input type="tel" id="contactPhone" placeholder="+43 6..." class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+              </div>
+            </div>
+
             <div>
-              <label for="contactName" class="block text-xs font-semibold text-slate-700 mb-1">Ihr Name *</label>
-              <input type="text" id="contactName" required placeholder="z. B. Mag. Maria Huber" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+              <label for="topicSelect" class="block text-xs font-semibold text-slate-700 mb-1">Gewünschter Schwerpunkt</label>
+              <select id="topicSelect" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                <option value="allgemein">Unverbindliches Erstgespräch &amp; Gesamtüberblick</option>
+                <option value="innforum">InnForum (Lizenz &amp; Live-Demo für Gemeinde / Region / Verband)</option>
+                <option value="stratum">Stratum (Lizenz &amp; Live-Demo für Projektsteuerung / NPO / Verwaltung)</option>
+                <option value="individual">Individuelle Software-Entwicklung / Projektberatung</option>
+              </select>
             </div>
+
             <div>
-              <label for="contactOrg" class="block text-xs font-semibold text-slate-700 mb-1">Gemeinde / Organisation *</label>
-              <input type="text" id="contactOrg" required placeholder="z. B. Planungsverband oder Trägerverein" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+              <label for="contactMsg" class="block text-xs font-semibold text-slate-700 mb-1">Ihre Nachricht oder Terminwunsch</label>
+              <textarea id="contactMsg" rows="4" placeholder="Wie können wir Sie oder Ihre Organisation bei Ihrem digitalen Vorhaben unterstützen?" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea>
             </div>
-          </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="contactEmail" class="block text-xs font-semibold text-slate-700 mb-1">E-Mail-Adresse *</label>
-              <input type="email" id="contactEmail" required placeholder="name@organisation.at" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+            <!-- Anti-Spam Honeypot -->
+            <input type="text" name="_honey" id="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+            <button type="submit" id="submitBtn" class="w-full py-3.5 rounded-xl bg-blue-600 text-white font-semibold text-sm hover:bg-blue-700 shadow-md shadow-blue-600/20 transition duration-200 active:scale-98 cursor-pointer">
+              Anfrage unverbindlich absenden →
+            </button>
+
+            <div id="formSuccess" class="hidden p-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-center space-y-1.5">
+              <div class="flex items-center justify-center gap-2 font-bold text-sm text-emerald-900">
+                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">✓</span>
+                <span>Anfrage erfolgreich übermittelt!</span>
+              </div>
+              <div class="text-xs text-emerald-700">Vielen Dank für Ihre Nachricht. Lukas Falch meldet sich innerhalb von 24 Stunden persönlich bei Ihnen.</div>
             </div>
-            <div>
-              <label for="contactPhone" class="block text-xs font-semibold text-slate-700 mb-1">Telefonnummer (optional)</label>
-              <input type="tel" id="contactPhone" placeholder="+43 6..." class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+
+            <div id="formError" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-center space-y-2">
+              <div class="text-xs font-semibold">Beim direkten Übermitteln ist ein Verbindungsfehler aufgetreten.</div>
+              <a id="mailFallbackLink" href="mailto:lukas.falch@gmail.com" class="inline-block px-4 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-bold hover:bg-rose-700 transition">
+                Anfrage direkt per E-Mail absenden →
+              </a>
             </div>
+
+          </form>
+
+          <!-- Trust Footer inside Form Card -->
+          <div class="mt-6 pt-5 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+            <span class="flex items-center gap-1.5"><span class="text-emerald-600 font-bold">✓</span> 100 % unverbindlich &amp; kostenlos</span>
+            <span class="flex items-center gap-1.5"><span class="text-emerald-600 font-bold">✓</span> DSGVO-konforme Bearbeitung ohne Weitergabe</span>
           </div>
 
-          <div>
-            <label for="topicSelect" class="block text-xs font-semibold text-slate-700 mb-1">Gewünschter Schwerpunkt</label>
-            <select id="topicSelect" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-              <option value="allgemein">Allgemeines Kennenlernen</option>
-              <option value="innforum">InnForum (Lizenz &amp; Demo für Region/Verband)</option>
-              <option value="stratum">Stratum (Lizenz &amp; Demo für NPOs &amp; Projekte)</option>
-              <option value="individual">Individuelle Software-Entwicklung / Projektberatung</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="contactMsg" class="block text-xs font-semibold text-slate-700 mb-1">Ihre Nachricht oder Terminwunsch</label>
-            <textarea id="contactMsg" rows="3" placeholder="Wie können wir Sie oder Ihre Organisation bei Ihrem digitalen Vorhaben unterstützen?" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-800 bg-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea>
-          </div>
-
-          <!-- Anti-Spam Honeypot -->
-          <input type="text" name="_honey" id="_honey" style="display:none" tabindex="-1" autocomplete="off">
-
-          <button type="submit" id="submitBtn" class="w-full py-3.5 rounded-xl bg-blue-600 text-white font-semibold text-sm hover:bg-blue-700 shadow-md shadow-blue-600/20 transition duration-200 active:scale-98 cursor-pointer">
-            Anfrage unverbindlich absenden
-          </button>
-
-          <div id="formSuccess" class="hidden p-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-center space-y-1.5">
-            <div class="flex items-center justify-center gap-2 font-bold text-sm text-emerald-900">
-              <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">✓</span>
-              <span>Anfrage erfolgreich übermittelt!</span>
-            </div>
-            <div class="text-xs text-emerald-700">Vielen Dank für Ihre Nachricht. Lukas Falch meldet sich innerhalb von 24 Stunden verlässlich bei Ihnen.</div>
-          </div>
-
-          <div id="formError" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-center space-y-2">
-            <div class="text-xs font-semibold">Beim direkten Übermitteln ist ein Verbindungsfehler aufgetreten.</div>
-            <a id="mailFallbackLink" href="mailto:lukas.falch@gmail.com" class="inline-block px-4 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-bold hover:bg-rose-700 transition">
-              Anfrage direkt per E-Mail absenden →
-            </a>
-          </div>
-
-        </form>
-
-        <!-- Direct Contact Footer -->
-        <div class="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div>
-            Direkte E-Mail: <a href="mailto:kontakt@innforum.at" class="font-bold text-blue-600 hover:underline">kontakt@innforum.at</a>
-          </div>
-          <div>
-            Standort: <strong>6410 Telfs, Tirol</strong>
-          </div>
         </div>
 
       </div>
@@ -3821,7 +4003,7 @@
 
   <!-- ==================== 10. MODALS ==================== -->
 
-  <!-- Modal: InnForum Feature Detail Modal (Identisch zur Willkommensseite auf innforum.at) -->
+  <!-- Modal: InnForum & Stratum Feature Detail Modal -->
   <div id="innforumFeatureModal" class="fixed inset-0 z-[12000] bg-slate-950/75 backdrop-blur-md hidden items-end sm:items-center justify-center p-0 sm:p-4 animate-modal-fadeIn" role="dialog" aria-modal="true" aria-labelledby="ifmTitle" onclick="closeInnforumFeatureModal(event)">
     <div class="bg-white rounded-t-[2.5rem] sm:rounded-3xl shadow-2xl w-full max-w-2xl max-h-[92dvh] sm:max-h-[88vh] overflow-hidden flex flex-col transform transition-all border border-slate-200 animate-modal-slideUp" onclick="event.stopPropagation()">
       
@@ -3841,7 +4023,7 @@
               <h2 id="ifmTitle" class="text-lg sm:text-2xl font-black text-slate-900 uppercase tracking-tight leading-tight"></h2>
               <span id="ifmBadge" class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-700 border border-blue-200"></span>
             </div>
-            <p class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Funktion im Detail</p>
+            <p id="ifmModalSublabel" class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Funktion im Detail</p>
           </div>
         </div>
         <button type="button" onclick="closeInnforumFeatureModal()" class="p-2 sm:p-2.5 bg-white/80 hover:bg-white border border-slate-200 rounded-full text-slate-500 hover:text-slate-800 transition-all shadow-xs cursor-pointer shrink-0 ml-2" aria-label="Schließen">
@@ -3868,7 +4050,7 @@
 
       <!-- Footer -->
       <div class="bg-slate-50/90 backdrop-blur-xs px-5 py-3.5 sm:px-6 sm:py-4 flex flex-wrap justify-between items-center border-t border-slate-100 shrink-0 gap-3">
-        <a href="https://innforum.at" target="_blank" rel="noopener" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-200 hover:border-blue-400 transition">
+        <a id="ifmFooterLink" href="https://innforum.at" target="_blank" rel="noopener" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-200 hover:border-blue-400 transition">
           <span>Live auf innforum.at öffnen ↗</span>
         </a>
         <button type="button" onclick="closeInnforumFeatureModal()" class="w-full sm:w-auto px-8 py-3 bg-slate-900 hover:bg-slate-800 text-white font-black uppercase tracking-wider text-xs rounded-xl shadow-md transition-all active:scale-95 cursor-pointer text-center">
@@ -4266,7 +4448,7 @@
       }
     }
 
-    // ==================== INNFORUM FEATURE DETAIL MODAL CONTROLLER ====================
+    // ==================== INNFORUM & STRATUM FEATURE DETAIL MODAL CONTROLLER ====================
     const innforumFeatures = [
       {
         title: "Informationsportal & Schwarzes Brett",
@@ -4276,17 +4458,17 @@
         badgeClasses: "bg-blue-100 text-blue-700 border-blue-200",
         iconPath: "M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z",
         description: "Flyer hochladen oder Inserate schalten: Beiträge, Marktplatz (Biete/Suche), automatische Newsletter, Audio-Podcasts und Beitragsübersetzung.",
-        longDescription: "Informationen und Ressourcen teilen war nie einfacher: Ein Klick, und die KI wandelt jeden Flyer oder jedes PDF in einen strukturierten Beitrag um – komplett mit Titel, Datum, Zielgruppe und Zusammenfassung. Am integrierten Schwarzen Brett können Organisationen unkompliziert Angebote, Gesuche, Leihgaben, Ehrenamt oder Räume teilen. Daraus generiert das System auf Wunsch Audio-Podcasts mit natürlicher Stimme und professionelle HTML-Newsletter für den Massenversand. Alle Beiträge lassen sich barrierefrei in Leichte Sprache oder Fremdsprachen übersetzen, vorlesen oder als Word-Dokument exportieren.",
+        longDescription: "Informationen und Ressourcen in Ihrer Gemeinde oder Region teilen war nie einfacher: Ein Klick, und die multimodale KI wandelt jeden Flyer oder jedes PDF in einen strukturierten Beitrag um – komplett mit Titel, Datum, Zielgruppe und Zusammenfassung. Am integrierten Schwarzen Brett können Vereine und Einrichtungen unkompliziert Angebote, Gesuche, Leihgaben, Ehrenamt oder Räume teilen. Daraus generiert das System auf Wunsch barrierefreie Audio-Podcasts (Zephyr TTS) und professionelle HTML-Newsletter. Alle Beiträge lassen sich barrierefrei in Leichte Sprache (A2) oder 55 Fremdsprachen übersetzen, vorlesen oder als Word-Dokument exportieren.",
         chips: [
-          { label: "Flyer-Scan", icon: "✨" },
+          { label: "KI Flyer-Scan", icon: "✨" },
           { label: "Schwarzes Brett", icon: "📋" },
           { label: "Podcast & Mail", icon: "🎙️" }
         ],
         highlights: [
-          "KI-Scan: Flyer oder PDF hochladen und sofort strukturieren",
-          "Schwarzes Brett: Ressourcen, Leihgaben, Ehrenamt & Räume teilen",
-          "Audio-Podcasts & E-Mail-Newsletter auf Knopfdruck",
-          "Beitragsübersetzung & Leichte Sprache (A2)"
+          "Multimodaler KI-Scan: Flyer oder PDF per Foto hochladen und sofort strukturieren",
+          "Schwarzes Brett: Ressourcen, Leihgaben, Ehrenamt & Räume regional teilen",
+          "Automatische Audio-Podcasts (Zephyr TTS) & HTML-Newsletter auf Knopfdruck",
+          "Beitragsübersetzung in 55 Sprachen & zertifizierte Leichte Sprache (A2)"
         ]
       },
       {
@@ -4297,56 +4479,57 @@
         badgeClasses: "bg-indigo-100 text-indigo-700 border-indigo-200",
         iconPath: "M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 18 4.5h-12.75a2.25 2.25 0 0 0-2.25 2.25v11.25A2.25 2.25 0 0 0 5.25 20.25h3.75m.75-15.75h6.75c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125H9.75c-.621 0-1.125-.504-1.125-1.125v-1.5c0-.621.504-1.125 1.125-1.125Z",
         description: "Termine unkompliziert abstimmen, Ressourcen teilen und Stimmungsbilder erfassen – mit automatischer KI-Synthese.",
-        longDescription: "Termine abstimmen und Stimmungsbilder einholen ohne Zettelwirtschaft: Erstelle Terminvorschläge mit Zu/Absage-Funktion oder strukturierte Umfragen mit Choice-Fragen, Noten-Skalen und Freitext. Das System versendet Einladungen automatisch per E-Mail an deine Verteilerlisten. Die integrierte KI-Synthese fasst Freitext-Feedback sekundenschnell in aussagekräftigen Kurzberichten zusammen.",
+        longDescription: "Termine abstimmen und Stimmungsbilder einholen ohne Zettelwirtschaft: Erstellen Sie Terminvorschläge mit Zu-/Absage-Funktion oder strukturierte Bürger- und Vereinsumfragen mit Auswahlfragen, Bewertungsskalen und Freitext – passwortlos teilbar per Magic Link oder QR-Code. Das System versendet Einladungen datenschutzkonform per E-Mail an Ihre Verteilerlisten. Die integrierte KI-Resonanzanalyse fasst hunderte Freitext-Rückmeldungen sekundenschnell in 3–5 prägnante Kernaussagen für Entscheidungsträger zusammen.",
         chips: [
           { label: "Termin-Voting", icon: "📅" },
           { label: "Live-Umfragen", icon: "🗳️" },
           { label: "KI-Synthese", icon: "🤖" }
         ],
         highlights: [
-          "Termin- & Umfragen-Abstimmung",
-          "Automatischer E-Mail-Versand an Verteiler",
-          "KI-Resonanzanalyse & Kalender-Sync"
+          "Termin- & Umfragen-Abstimmung ohne Login-Hürde (Magic Links & QR-Code)",
+          "Datenschutzkonformer E-Mail-Versand an Verteiler (BCC-Schutz)",
+          "KI-Resonanzanalyse synthetisiert Freitext-Feedback in klare Kernaussagen",
+          "Direkter Kalender-Sync (ICS) für Bürger:innen und Gremien"
         ]
       },
       {
         title: "Sozialatlas & 360° Räume",
-        badge: "Interaktiv",
+        badge: "24/7 KI-Thelfer",
         gradient: "from-emerald-600 to-teal-600",
         headerBg: "bg-emerald-50/70",
         badgeClasses: "bg-emerald-100 text-emerald-700 border-emerald-200",
         iconPath: "M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418",
         description: "Interaktive Karte aller sozialen Einrichtungen, 360°-Raumbegehungen und der intelligente KI-Chatbot „Thelfer“.",
-        longDescription: "Schluss mit dem Suchen in Excel-Listen: Der Sozialatlas zeigt alle sozialen Angebote in Telfs auf einer interaktiven Karte. Klicke auf jede Einrichtung und erhalte sofort Angebote, Kontakte, Kooperationspartner und virtuelle 360°-Raumbegehungen. Der Netzwerkgraph macht Beziehungen und Abhängigkeiten auf einen Blick sichtbar. Und wenn du trotzdem nicht weiterweißt: Der KI-Chatbot kennt das gesamte Netzwerk und beantwortet deine Fragen in Echtzeit.",
+        longDescription: "Schluss mit veralteten Excel-Listen: Der Sozialatlas zeigt sämtliche sozialen Einrichtungen, Vereine und Angebote Ihrer Gemeinde oder Region auf einer interaktiven OpenStreetMap-Karte. Per Klick erhalten Bürger:innen und Fachkräfte sofort Angebote, Öffnungszeiten, Ansprechpersonen und virtuelle 360°-Raumbegehungen (zum Abbau von Schwellenangst). Der interaktive Netzwerkgraph macht Kooperationen nach Lebenslagen sichtbar – und der KI-Bürgerlotse „Thelfer“ beantwortet Fragen zu Kitas, Pflege, Notrufen und Hilfen rund um die Uhr.",
         chips: [
           { label: "Ortskarte", icon: "🗺️" },
           { label: "360° Begehung", icon: "📸" },
           { label: "KI-Thelfer", icon: "🤖" }
         ],
         highlights: [
-          "Interaktive Karte mit 360°-Begehungen",
-          "Beziehungen im Netzwerkgraph sichtbar",
-          "KI-Chatbot beantwortet alle Fragen"
+          "Interaktive OpenStreetMap-Karte mit Barrierefreiheits-Filter & 360°-Begehungen",
+          "Lebenslagen-Netzwerkgraph macht regionale Strukturen auf einen Blick sichtbar",
+          "24/7 KI-Bürgerlotse „Thelfer“ entlastet das Bürgerservice bei Routineanfragen"
         ]
       },
       {
         title: "Netzwerk & Synergie-Scout",
-        badge: "Vernetzung",
+        badge: "KI-Synergie-Scout",
         gradient: "from-purple-600 to-pink-600",
         headerBg: "bg-purple-50/70",
         badgeClasses: "bg-purple-100 text-purple-700 border-purple-200",
         iconPath: "M14 10h4.764a2 2 0 0 1 1.789 2.894l-3.5 7A2 2 0 0 1 15.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 0 0-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2.5",
         description: "Partner mit dem KI-Scout finden, Kooperations-Pitches im OMW Studio erstellen und gemeinsame Boards teilen.",
-        longDescription: "Kooperationen entstehen hier nicht zufällig: Der KI-Scout durchsucht das gesamte Netzwerk und schlägt Einrichtungen vor, die wirklich zu euch passen – basierend auf Themen, Zielgruppen und Angeboten. Ein Klick fürs Synergie-Gutachten, das Stärken und Potenziale konkret benennt. Das OMW Studio generiert euch einen professionellen 60-Sekunden-Pitch per KI – als Script oder Audio. Aktive Partnerschaften teilen sich ein gemeinsames Kanban-Board.",
+        longDescription: "Kooperationen im Sozialraum gezielt fördern: Der KI-Synergie-Scout analysiert alle eingetragenen Einrichtungen Ihrer Region, gleicht Zielgruppen sowie Ressourcen ab und deckt ungenutzte Schnittmengen oder Versorgungslücken auf. Ein Klick genügt für ein strukturiertes Synergie-Gutachten. Zusätzlich erstellt das integrierte OMW Studio in 60 Sekunden fertige Social-Media- oder Vorstellungs-Skripte für Vereine. Aktive Kooperationspartner arbeiten direkt auf einem gemeinsamen Kanban-Board zusammen.",
         chips: [
           { label: "KI-Partner-Match", icon: "🎯" },
           { label: "OMW Studio", icon: "🎙️" },
           { label: "Kanban-Board", icon: "📋" }
         ],
         highlights: [
-          "KI-Scout findet den perfekten Partner",
-          "OMW Studio: Dein Auftritt in 60 Sekunden",
-          "Gemeinsames Kanban-Board mit Partnern"
+          "KI-Synergie-Scout identifiziert passende Kooperationspartner & Versorgungslücken",
+          "OMW Studio: KI-gestützte 60-Sekunden-Präsentationsskripte für Vereine & Träger",
+          "Trägerübergreifendes Kanban-Board inkl. formatiertem Word-Export (.docx)"
         ]
       },
       {
@@ -4357,16 +4540,16 @@
         badgeClasses: "bg-amber-100 text-amber-800 border-amber-200",
         iconPath: "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z",
         description: "Früherkennung sozialer Entwicklungen, vertrauliche Hotspot-Heatmaps, Resonanz-Analysen und Gemeindeberichte.",
-        longDescription: "Evidenzbasierte Sozialraum-Arbeit und fundierte Entscheidungen: Das Stimmungs-Barometer erfasst Trends und Bedarfe im Sozialraum Telfs frühzeitig und anonymisiert. Vertrauliche Hotspot-Meldungen (Angsträume, Bedarfe, Ideen) machen Herausforderungen im geschützten Raum sichtbar. Wirkungs-Analysen und automatisierte Gemeinde-Reports (.pptx / .docx) liefern verlässliche Daten für Politik, Verwaltung und Träger.",
+        longDescription: "Evidenzbasierte Sozialraum-Planung für Politik und Verwaltung: Das Trend-Barometer erfasst soziale Entwicklungen und Bedarfe in Ihrer Gemeinde oder Region frühzeitig und vollkommen anonymisiert. Vertrauliche Hotspot-Meldungen (z. B. Angsträume, Jugendbedarfe, Infrastruktur-Ideen) machen Handlungsfelder im geschützten Raum sichtbar. Automatisierte Gremien- und Ausschussberichte (.pptx / .docx) liefern auf Knopfdruck belastbare Entscheidungsgrundlagen.",
         chips: [
           { label: "Sozialmonitoring", icon: "📈" },
           { label: "Hotspot-Lagebild", icon: "🗺️" },
           { label: "Impact-Tracking", icon: "📊" }
         ],
         highlights: [
-          "Sozialraum-Monitoring & Trend-Barometer zur Früherkennung",
-          "Vertrauliches Hotspot-Lagebild mit Datenschutz-Maskierung",
-          "Impact-Tracking & automatisierte Gemeindeberichte (.pptx / .docx)"
+          "Sozialraum-Monitoring & Trend-Barometer zur kommunalen Früherkennung",
+          "Vertrauliches Hotspot-Lagebild mit DSGVO-konformer Datenschutz-Maskierung",
+          "Impact-Tracking & 1-Klick-Gemeindeberichte als PowerPoint (.pptx) und Word (.docx)"
         ]
       },
       {
@@ -4377,36 +4560,204 @@
         badgeClasses: "bg-rose-100 text-rose-700 border-rose-200",
         iconPath: "M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286Zm0 13.036h.007v.008H12v-.008Z",
         description: "Notfallkontakte, Kriseneinrichtungen und Hilfsfonds sofort abrufbar. Mit Vermittlungskompass und druckbaren A4-Klientenmappen.",
-        longDescription: "Wenn es schnell gehen muss: Notfallkontakte, Kriseneinrichtungen und Sozialtöpfe sind sofort abrufbar. Der Vermittlungskompass führt Schritt für Schritt zu den richtigen Einrichtungen – inklusive Sprachübersetzung von Beiträgen und Leichter Sprache. Im integrierten Print-Studio erstellst du im Handumdrehen druckfertige A4-Infoblätter und Klienten-Druckmappen für Menschen ohne digitalen Zugang.",
+        longDescription: "Wenn im Beratungsalltag jede Minute zählt: Notfallkontakte, Kriseneinrichtungen und finanzielle Hilfsfonds (Bund, Land, Gemeinde) sind sofort strukturiert abrufbar. Der interaktive Vermittlungskompass führt Schritt für Schritt zu den passenden Hilfsstellen – inklusive KI-Übersetzung in 55 Sprachen mit Sinntreue-Wächter und Leichter Sprache (A2). Im integrierten A4 Print-Studio erstellen Sie mit einem Klick druckfertige Infoblätter und Klientenmappen für Menschen ohne Internetzugang.",
         chips: [
           { label: "Notfallfonds", icon: "🏥" },
           { label: "Kompass-Finder", icon: "🧭" },
           { label: "A4 Print-Studio", icon: "🖨️" }
         ],
         highlights: [
-          "Notfall-Wissen & Hilfsfonds immer griffbereit",
-          "Vermittlungskompass mit Beitragsübersetzung & Leichter Sprache",
-          "A4 Print-Studio & Klientenmappen für Offline-Nutzung"
+          "Notfall-Wissen, Krisendienste & finanzielle Hilfsfonds sofort griffbereit",
+          "Barrierefreie KI-Übersetzung (55 Sprachen + Sinntreue-Wächter & A2 Leichte Sprache)",
+          "Integriertes A4 Print-Studio für persönliche Beratungsmappen vor Ort"
         ]
       }
     ];
 
-    function openInnforumFeatureModal(index) {
-      const feature = innforumFeatures[index];
-      if (!feature) return;
+    const stratumFeatures = [
+      {
+        title: "1. 22 Native Arbeitsansichten",
+        badge: "Single Source of Truth",
+        gradient: "from-indigo-600 to-blue-600",
+        headerBg: "bg-indigo-50/80",
+        badgeClasses: "bg-indigo-100 text-indigo-800 border-indigo-200",
+        iconPath: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+        description: "Alle Projektperspektiven in einer einzigen Plattform – in Echtzeit synchronisiert ohne teure Zusatz-Plugins.",
+        longDescription: "In Verwaltungen und Verbundprojekten arbeiten unterschiedliche Rollen mit unterschiedlichen Denkweisen: Während die Projektleitung den Gantt-Zeitstrahl mit Abhängigkeiten und kritischem Pfad steuert, bevorzugt das Team im Tagesgeschäft das zeitbasierte Kanban-Board (Heute, Woche, Monat) oder die Personen-Kommunikationsmatrix. Alle 22 Ansichten greifen auf denselben Echtzeit-Datenbestand zu.",
+        chips: [
+          { label: "Gantt-Timeline", icon: "📊" },
+          { label: "Zeit-Kanban", icon: "📋" },
+          { label: "Mindmap & Matrix", icon: "🕸️" }
+        ],
+        highlights: [
+          "Interaktive Gantt-Roadmap mit Meilensteinen, Abhängigkeiten & Fortschritt",
+          "Zeitbasiertes Aufgaben-Kanban (Überfällig, Heute, Woche, Monat, Langfristig)",
+          "Stakeholder-Kommunikationsboard, dynamische Mindmap, Kalender & Risikomatrix",
+          "Ersetzt 3–4 separate US-Abos (Asana, Miro, Trello) durch eine homogene Lösung"
+        ]
+      },
+      {
+        title: "2. KI-Assistenten-Hub & Voice-to-Task",
+        badge: "KI-Voice-to-Task",
+        gradient: "from-purple-600 to-indigo-600",
+        headerBg: "bg-purple-50/80",
+        badgeClasses: "bg-purple-100 text-purple-800 border-purple-200",
+        iconPath: "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z",
+        description: "Sprachnotizen unterwegs aufsprechen: Die KI transkribiert und erzeugt sofort fertige Aufgaben, Fristen und Zuweisungen.",
+        longDescription: "Nach einer Baustellenbegehung, einer Ausschusssitzung oder einem Bürgergespräch bleibt oft kaum Zeit für das Abtippen von Protokollen. Mit Stratum sprechen Sie Ihre Notiz einfach ins Smartphone: Die KI transkribiert das Gesagte, erkennt automatisch konkrete Aufgaben, Fristen, Verantwortliche sowie Meilensteine und ordnet sie auf Wunsch direkt in das passende Projekt und Gantt-Chart ein. Auch eingehende E-Mails und PDFs lassen sich per Smart-Import in Sekunden strukturieren.",
+        chips: [
+          { label: "Sprachmemo vor Ort", icon: "🎙️" },
+          { label: "Auto-Aufgaben", icon: "✨" },
+          { label: "Smart E-Mail/PDF Import", icon: "📥" }
+        ],
+        highlights: [
+          "Voice-to-Task: Gesprochene Sprachmemos werden direkt zu strukturierten Aufgaben",
+          "Automatische Erkennung von Fristen, Prioritäten und zuständigen Teammitgliedern",
+          "Smart-Import wandelt lange E-Mail-Verläufe und Sitzungsprotokolle in To-dos um",
+          "Volle Vorschau-Kontrolle vor dem Übernehmen in den Projektplan"
+        ]
+      },
+      {
+        title: "3. 17-Felder Concept Builder",
+        badge: "Geführte KI-Workshops",
+        gradient: "from-rose-600 to-pink-600",
+        headerBg: "bg-rose-50/80",
+        badgeClasses: "bg-rose-100 text-rose-800 border-rose-200",
+        iconPath: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+        description: "Von der ersten Projektidee bis zum prüfsicheren Förderkonzept (LEADER, ESF, Land & Bund) mit geführten KI-Workshops.",
+        longDescription: "Förderanträge und Projekteinreichungen scheitern oft am hohen Konzeptionsaufwand. Der 17-Felder Concept Builder führt Ihr Team strukturiert durch alle förderrelevanten Dimensionen: Von Vision, Zielgruppen und Wirkungslogik (Theory of Change / IOOI) über Stakeholder-Mapping und Partizipations-Monitor bis hin zu SWOT-Analyse, RACI-Rollen und Budgetierung. Der integrierte KI-Sparringspartner liefert auf Knopfdruck Textentwürfe und leitet daraus direkt Arbeitspakete ab.",
+        chips: [
+          { label: "17-Felder Canvas", icon: "🧭" },
+          { label: "Theory of Change", icon: "🎯" },
+          { label: "LEADER / EU-Förderung", icon: "🏛️" }
+        ],
+        highlights: [
+          "17 strukturierte Konzeptfelder speziell für kommunale & geförderte Vorhaben",
+          "Integrierte Wirkungslogik (Input – Output – Outcome – Impact) für Fördergeber",
+          "KI-Workshop-Assistent überwindet das „Blank-Canvas-Syndrom“ in Minuten",
+          "1-Klick-Ableitung von Meilensteinen und Aufgaben direkt in das Gantt-Board"
+        ]
+      },
+      {
+        title: "4. Strategische Analyse-Tools & Matrizen",
+        badge: "Impact-Effort 2x2 & RACI",
+        gradient: "from-amber-600 to-orange-600",
+        headerBg: "bg-amber-50/80",
+        badgeClasses: "bg-amber-100 text-amber-800 border-amber-200",
+        iconPath: "M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z",
+        description: "Ressourcen richtig priorisieren und Verantwortlichkeiten zwischen Gemeinde, Verband und Partnern glasklar regeln.",
+        longDescription: "Wenn Budgets und Personalstunden knapp sind, entscheidet die richtige Priorisierung über den Projekterfolg. Die interaktive 2x2 Impact-Effort-Matrix trennt sofort sichtbare „Quick Wins“ von zeitraubenden Aufgaben. Gleichzeitig sorgt die RACI-Verantwortlichkeitsmatrix (Responsible, Accountable, Consulted, Informed) für volle Klarheit zwischen Amtsleitung, Projektleitung und externen Trägern – inklusive hochauflösendem Grafik-Export für Sitzungsvorlagen.",
+        chips: [
+          { label: "Impact-Effort 2x2", icon: "⚖️" },
+          { label: "RACI-Matrix", icon: "👥" },
+          { label: "Gremien-Grafikexport", icon: "🖼️" }
+        ],
+        highlights: [
+          "Interaktive 2x2 Impact-Effort-Matrix zur visuellen Priorisierung im Ausschuss",
+          "Durchgängige RACI-Rollenverteilung verhindert Zuständigkeitslücken",
+          "Risiko-Radar & Kapazitätsauslastung zeigen Engpässe frühzeitig auf",
+          "Hochauflösender Bild- und Dokumentenexport für Gemeinderat & Vorstand"
+        ]
+      },
+      {
+        title: "5. Förderberichte & Word-Export (.docx)",
+        badge: "Förderkonforme KI-Berichte",
+        gradient: "from-blue-600 to-cyan-600",
+        headerBg: "bg-blue-50/80",
+        badgeClasses: "bg-blue-100 text-blue-800 border-blue-200",
+        iconPath: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
+        description: "Prüfsichere Zwischen-, Sach- und Endberichte inklusive eigenem Gemeindebriefkopf auf Knopfdruck als Word-Dokument.",
+        longDescription: "Statt tagelang Projektstände aus E-Mails und Tabellen zusammenzukopieren, erstellt Stratum Ihren Tätigkeits- oder Förderbericht auf Knopfdruck: Die KI aggregiert erledigte Meilensteine, Aufgaben, geleistete Stunden und Kennzahlen im gewünschten Zeitraum und generiert ein sauber formatiertes Word- (.docx) oder PDF-Dokument – komplett mit Ihrem individuellen Gemeinde- oder Vereinsbriefkopf, Logo und Fotodokumentation.",
+        chips: [
+          { label: "Word-Export (.docx)", icon: "📄" },
+          { label: "Eigener Briefkopf", icon: "🏛️" },
+          { label: "Soll/Ist-Kennzahlen", icon: "📊" }
+        ],
+        highlights: [
+          "1-Klick-Generierung von Zwischen-, Sach- und Endberichten für Förderstellen",
+          "Editierbarer Microsoft Word-Export (.docx) mit eigenem Briefkopf & Logo",
+          "Automatische Auswertung erledigter Arbeitspakete, Meilensteine und Zeitbuchungen",
+          "Spart bis zu 80 % Verwaltungszeit bei der Berichtlegung an Land, Bund & EU"
+        ]
+      },
+      {
+        title: "6. DSGVO-Schutzschild & PII-Sanitizer",
+        badge: "DSGVO PII-Sanitizer",
+        gradient: "from-emerald-600 to-teal-600",
+        headerBg: "bg-emerald-50/80",
+        badgeClasses: "bg-emerald-100 text-emerald-800 border-emerald-200",
+        iconPath: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+        description: "Automatische Echtzeit-Maskierung sensibler Personendaten vor KI-Aufrufen und bei externen Projektfreigaben.",
+        longDescription: "Kommunale Verwaltungen und soziale Träger unterliegen strengsten Datenschutzvorgaben. Stratum besitzt deshalb ein mehrstufiges DSGVO-Schutzschild: Ein serverseitiger PII-Sanitizer erkennt und maskiert Klarnamen, Telefonnummern, E-Mail-Adressen und vertrauliche interne Vermerke automatisch vor jeder KI-Verarbeitung sowie beim Teilen von Projektansichten mit externen Partnern. Alle Daten liegen in Frankfurt am Main (ISO 27001) mit strikter Zero-Data-Training-Garantie.",
+        chips: [
+          { label: "PII-Echtzeit-Maskierung", icon: "🛡️" },
+          { label: "EU-Server Frankfurt", icon: "🇪🇺" },
+          { label: "Zero-Data-Training", icon: "🔒" }
+        ],
+        highlights: [
+          "Automatische Schwärzung personenbezogener Daten (PII) vor KI-Transkription & Analyse",
+          "Sichere Web-Freigabe für externe Gremien ohne Preisgabe interner Notizen oder Budgets",
+          "Hosting ausschließlich in Frankfurt am Main inkl. Auftragsverarbeitungsvertrag (Art. 28 DSGVO)",
+          "Keinerlei Verwendung von Projektdaten zum Training öffentlicher KI-Modelle"
+        ]
+      },
+      {
+        title: "7. Revisionssichere Projekt-Zeitmaschine",
+        badge: "Snapshot-Rollback",
+        gradient: "from-teal-600 to-cyan-600",
+        headerBg: "bg-teal-50/80",
+        badgeClasses: "bg-teal-100 text-teal-800 border-teal-200",
+        iconPath: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
+        description: "Inkrementelle Historie und 1-Klick-Wiederherstellung für sorgenfreies Arbeiten im gesamten Team.",
+        longDescription: "Wo viele Akteure aus Verwaltung, Vereinen und Arbeitskreisen gemeinsam an einem Projektboard arbeiten, darf niemand Angst haben, versehentlich etwas zu verstellen. Die integrierte Projekt-Zeitmaschine speichert Änderungen revisionssicher ab und erlaubt es, gelöschte Aufgaben, verschobene Meilensteine oder frühere Planungsstände jederzeit mit einem einzigen Klick wiederherzustellen.",
+        chips: [
+          { label: "1-Klick-Rollback", icon: "⏪" },
+          { label: "Änderungshistorie", icon: "📜" },
+          { label: "Sorgenfreie Kollaboration", icon: "🤝" }
+        ],
+        highlights: [
+          "Lückenlose Snapshot-Historie aller Projekt-, Aufgaben- und Konzeptänderungen",
+          "Versehentlich gelöschte Karten oder Meilensteine sofort wiederherstellbar",
+          "Ideal für heterogene Projektteams und ehrenamtliche Arbeitsgruppen"
+        ]
+      },
+      {
+        title: "8. Mobile Offline-PWA & Live-Zeiterfassung",
+        badge: "Offline PWA & Timer",
+        gradient: "from-slate-700 to-indigo-700",
+        headerBg: "bg-slate-100/90",
+        badgeClasses: "bg-slate-200 text-slate-800 border-slate-300",
+        iconPath: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
+        description: "Volle Funktionsfähigkeit auch im Funkloch sowie integrierte Stundenerfassung für prüfsichere Förderabrechnungen.",
+        longDescription: "Ob im Kellerarchiv, am Bauhof oder bei Außenterminen im ländlichen Raum: Als Progressive Web App (PWA) speichert Stratum Ihre Arbeitsdaten lokal zwischen und synchronisiert sie automatisch, sobald wieder eine Verbindung besteht. Für geförderte Projekte (z. B. LEADER, ESF) bietet Stratum zudem einen integrierten Live-Timer pro Aufgabe inklusive Soll/Ist-Stundenvergleich für den Verwendungsnachweis.",
+        chips: [
+          { label: "Offline-fähig", icon: "📶" },
+          { label: "Förder-Stundentimer", icon: "⏱️" },
+          { label: "Kein App-Store-Zwang", icon: "📱" }
+        ],
+        highlights: [
+          "1-Klick-Installation auf jedem Diensthandy (iOS & Android) ohne App-Store-Hürde",
+          "Offline-Aufgabenboard und Sprachaufnahme auch ohne Mobilfunkempfang nutzbar",
+          "Integrierter Live-Timer & Soll/Ist-Stundenauswertung für Förderabrechnungen"
+        ]
+      }
+    ];
 
+    function renderFeatureModalContent(feature, platform) {
       const modal = document.getElementById('innforumFeatureModal');
       const header = document.getElementById('ifmHeader');
       const iconWrapper = document.getElementById('ifmIconWrapper');
       const iconSvg = document.getElementById('ifmIconSvg');
       const title = document.getElementById('ifmTitle');
       const badge = document.getElementById('ifmBadge');
+      const sublabel = document.getElementById('ifmModalSublabel');
       const desc = document.getElementById('ifmDesc');
       const longDesc = document.getElementById('ifmLongDesc');
       const chipsContainer = document.getElementById('ifmChips');
       const highlightsContainer = document.getElementById('ifmHighlights');
+      const footerLink = document.getElementById('ifmFooterLink');
 
-      if (!modal) return;
+      if (!modal || !feature) return;
 
       iconWrapper.className = `p-3 sm:p-3.5 rounded-2xl shadow-md bg-gradient-to-tr ${feature.gradient} text-white shrink-0`;
       iconSvg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="${feature.iconPath}" />`;
@@ -4416,6 +4767,22 @@
       title.textContent = feature.title;
       badge.textContent = feature.badge;
       badge.className = `px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${feature.badgeClasses}`;
+
+      if (sublabel) {
+        sublabel.textContent = platform === 'stratum' ? 'Stratum Modul im Detail' : 'InnForum Modul im Detail';
+      }
+
+      if (footerLink) {
+        if (platform === 'stratum') {
+          footerLink.href = 'https://stratum.co.at';
+          footerLink.innerHTML = '<span>Live auf stratum.co.at öffnen ↗</span>';
+          footerLink.className = 'text-xs font-bold text-indigo-700 hover:text-indigo-900 flex items-center gap-1.5 bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-200 hover:border-indigo-400 transition';
+        } else {
+          footerLink.href = 'https://innforum.at';
+          footerLink.innerHTML = '<span>Live auf innforum.at öffnen ↗</span>';
+          footerLink.className = 'text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-200 hover:border-blue-400 transition';
+        }
+      }
 
       desc.textContent = feature.description;
       longDesc.textContent = feature.longDescription;
@@ -4450,6 +4817,14 @@
       modal.classList.remove('hidden');
       modal.classList.add('flex');
       document.body.style.overflow = 'hidden';
+    }
+
+    function openInnforumFeatureModal(index) {
+      renderFeatureModalContent(innforumFeatures[index], 'innforum');
+    }
+
+    function openStratumFeatureModal(index) {
+      renderFeatureModalContent(stratumFeatures[index], 'stratum');
     }
 
     function closeInnforumFeatureModal(event) {
@@ -4538,7 +4913,7 @@
         title: 'KI-Thelfer Bürgerassistent',
         badge: '📱 Mobile App • Dialogbasierte KI',
         src: 'screenshots/innforum-mobile-thelfer.jpg',
-        desc: 'Intelligenter Assistent für Telfs: Beantwortet gezielte Bürgeranfragen, durchsucht Einrichtungen, Fachdienste, Hilfsfonds und aktuelle Gemeindethemen.'
+        desc: 'Intelligenter Assistent für Ihre Gemeinde: Beantwortet gezielte Bürgeranfragen, durchsucht Einrichtungen, Fachdienste, Hilfsfonds und aktuelle Gemeindethemen.'
       },
       {
         product: 'InnForum • Mobile',
@@ -4676,7 +5051,7 @@
         title: 'Mobiles Aufgaben- & Fristen-Board',
         badge: '📱 Mobile App • Workflow & Status',
         src: 'screenshots/stratum-mobile-board.jpg',
-        desc: 'Schnelle Daumenbedienung für überfällige Todos, Tagesfokus, ELAK-Verknüpfungen und administrative Aufgaben im Außendienst.'
+        desc: 'Schnelle Daumenbedienung für überfällige Todos, Tagesfokus, Gremien- & Projektfristen sowie administrative Aufgaben im Außendienst.'
       },
       {
         product: 'Stratum • Mobile',
@@ -5078,29 +5453,36 @@
         updateInnforumCarouselState();
       }
 
-      // 6. Continuous Flow Spine Scroll Tracker (C: Das Gesamtbild)
+      // 6. Continuous Flow Spine & Header Nav Scroll Tracker (C: Das Gesamtbild)
       const flowNodes = document.querySelectorAll('.flow-spine-node');
-      if (flowNodes.length > 0) {
+      const headerNavLinks = document.querySelectorAll('.header-nav-link');
+      if (flowNodes.length > 0 || headerNavLinks.length > 0) {
         const flowTargets = [
-          { id: 'hero', el: document.getElementById('hero') },
-          { id: 'innforum', el: document.getElementById('innforum') },
-          { id: 'stratum', el: document.getElementById('stratum') },
-          { id: 'referenzen', el: document.getElementById('referenzen') },
-          { id: 'vorteile', el: document.getElementById('vorteile') },
-          { id: 'faq', el: document.getElementById('faq') },
-          { id: 'kontakt', el: document.getElementById('kontakt') }
+          { id: 'hero', nav: '', el: document.getElementById('hero') },
+          { id: 'produkte', nav: 'produkte', el: document.getElementById('produkte') },
+          { id: 'innforum', nav: 'produkte', el: document.getElementById('innforum') },
+          { id: 'stratum', nav: 'produkte', el: document.getElementById('stratum') },
+          { id: 'referenzen', nav: 'referenzen', el: document.getElementById('referenzen') },
+          { id: 'vorteile', nav: 'vorteile', el: document.getElementById('vorteile') },
+          { id: 'ueber-uns', nav: 'ueber-uns', el: document.getElementById('ueber-uns') },
+          { id: 'faq', nav: 'faq', el: document.getElementById('faq') },
+          { id: 'kontakt', nav: 'kontakt', el: document.getElementById('kontakt') }
         ];
 
         const updateFlowSpine = () => {
           const scrollY = window.scrollY;
           const winH = window.innerHeight;
           let current = 'hero';
+          let currentNav = '';
 
           for (const item of flowTargets) {
             if (item.el) {
               const top = item.el.getBoundingClientRect().top + scrollY;
               if (scrollY >= top - winH * 0.4) {
-                current = item.id;
+                if (item.id !== 'produkte' && item.id !== 'ueber-uns') {
+                  current = item.id;
+                }
+                currentNav = item.nav;
               }
             }
           }
@@ -5113,6 +5495,11 @@
             } else {
               node.removeAttribute('aria-current');
             }
+          });
+
+          headerNavLinks.forEach(link => {
+            const isActive = link.dataset.nav === currentNav && currentNav !== '';
+            link.classList.toggle('active', isActive);
           });
         };
 
