@@ -209,7 +209,7 @@
           "description": "Unverbindliche Live-Vorführung & Lizenzanfrage"
         },
         "featureList": [
-          "22 verknüpfte Projektansichten (Gantt-Zeitplan, Zeit-Kanban, Mindmap, Personen-Board, Kalender, Tabelle)",
+          "Multi-Projektmanagement in 6 synchronen Ansichten (Zeit-Kanban, Gantt-Diagramm, Zeitstrom, Mindmap, Kalender, Kontakte-Kanban)",
           "KI-Assistenz-Zentrale mit 4 Werkzeugen (Eingangs-Korb, Protokollant & Sprachnotizen, Notizbuch, Projektschmiede)",
           "17-Felder-Konzeptwerkstatt mit Dokumenten-Import & Wirkungsmodell für Förderanträge",
           "Aufwand-Nutzen-Matrix (2x2) & Rollenverteilung (RACI)",
@@ -1531,13 +1531,13 @@
                   <svg class="w-2.5 h-2.5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                   <span>innforum.at • stratum.co.at</span>
                 </div>
-                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">29 Ansichten</span>
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Galerie</span>
               </div>
               <div class="relative overflow-hidden">
                 <img src="screenshots/innforum-netzwerk.png" alt="CivicFlow Plattform-Vorschau: InnForum Netzwerk &amp; Sozialatlas" loading="eager">
                 <div class="absolute bottom-2.5 right-2.5 px-3 py-1.5 rounded-full bg-slate-900/85 backdrop-blur-xs text-white text-xs font-bold flex items-center gap-1.5 shadow-lg border border-white/15">
                   <svg class="w-3.5 h-3.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                  <span>Einblicke öffnen (29 Bilder)</span>
+                  <span>Screenshot-Galerie öffnen</span>
                 </div>
               </div>
             </div>
@@ -2259,7 +2259,7 @@
                 <span class="font-normal text-slate-500 lowercase">(Klicken zum Vergrößern)</span>
               </span>
               <button onclick="openGallery('innforum', 0)" class="text-xs font-semibold text-blue-700 hover:text-blue-900 transition flex items-center gap-1 cursor-pointer">
-                <span>Alle 15 InnForum-Ansichten in der Galerie öffnen</span>
+                <span>InnForum-Screenshots in der Galerie ansehen</span>
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
               </button>
             </div>
@@ -2379,7 +2379,7 @@
               <!-- Navigation Controls: Counter, Arrow Buttons & Fullscreen Gallery Link -->
               <div class="flex items-center gap-2.5 self-start lg:self-end shrink-0 pt-2 lg:pt-0">
                 <span id="innforumCarouselCounter" class="text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-full">
-                  1–5 von 9 Ansichten
+                  1–5 von 9 Screenshots
                 </span>
                 <div class="flex items-center gap-1.5">
                   <button id="innforumPrevBtn" onclick="scrollInnforumCarousel(-1)" class="carousel-nav-btn" aria-label="Vorherige Ansichten" title="Zurück">
@@ -2912,7 +2912,7 @@
                 <span class="font-normal text-slate-400 lowercase">(Klicken zum Vergrößern)</span>
               </span>
               <button onclick="openGallery('stratum', 0)" class="text-xs font-semibold text-indigo-300 hover:text-white transition flex items-center gap-1 cursor-pointer bg-slate-900/80 hover:bg-slate-800 px-3.5 py-1.5 rounded-lg border border-slate-800 hover:border-indigo-500/50">
-                <span>Alle 12 Stratum-Ansichten in der Galerie öffnen</span>
+                <span>Stratum-Screenshots in der Galerie ansehen</span>
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
               </button>
             </div>
@@ -3081,7 +3081,7 @@
 
               <div class="flex items-center gap-2.5 self-start lg:self-end shrink-0 pt-2 lg:pt-0">
                 <button onclick="openGallery('stratum', 9)" class="shrink-0 text-xs sm:text-sm font-semibold text-indigo-300 hover:text-white transition flex items-center gap-1.5 cursor-pointer bg-slate-900/90 hover:bg-slate-800 px-4 py-2 rounded-xl border border-slate-800 hover:border-indigo-500/50">
-                  <span>Alle 12 Stratum-Ansichten</span>
+                  <span>Stratum-Screenshots</span>
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
               </div>
@@ -3418,65 +3418,11 @@
     </div>
   </section>
 
-  <!-- Flow Conduit: Vorteile → Qualitätsversprechen -->
+  <!-- Flow Conduit: Vorteile → Über uns -->
   <div class="flow-conduit" aria-hidden="true">
     <div class="flow-conduit-line-top"></div>
     <div class="flow-conduit-bead"></div>
     <div class="flow-conduit-line-bottom"></div>
-  </div>
-
-  <!-- ==================== PARTNERSCHAFTS-VERSPRECHEN / TRENNLEISTE ==================== -->
-  <section class="py-16 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
-    <!-- Decorative gradient orbs -->
-    <div class="absolute inset-0 opacity-20">
-      <div class="absolute top-0 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-[100px]"></div>
-      <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-indigo-500 rounded-full blur-[100px]"></div>
-    </div>
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      
-      <!-- Sektions-Einleitung für harmonischen Fluss -->
-      <div class="text-center max-w-2xl mx-auto mb-10 space-y-2 reveal">
-        <span class="text-xs font-bold uppercase tracking-widest text-blue-400">Kennzahlen &amp; Rahmenbedingungen</span>
-        <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-          Verlässliche Grundlagen für Gemeinden, Regionen und Trägerorganisationen.
-        </h3>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 text-center">
-        
-        <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs space-y-2.5 reveal">
-          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="100" data-suffix=" %">0</div>
-          <div class="text-sm font-bold text-white uppercase tracking-wider">Privacy by Design</div>
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Datenschutz nach DSGVO, primäre Datenhaltung in der EU (Frankfurt), AV-Vertrag &amp; 100 % werbe- und trackingfrei.</p>
-        </div>
-        
-        <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs space-y-2.5 reveal delay-100">
-          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="22" data-suffix="">0</div>
-          <div class="text-sm font-bold text-white uppercase tracking-wider">Verknüpfte Ansichten</div>
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Zeitstrahl, Aufgaben-Board, Sozialatlas, 17-Felder-Konzeptwerkstatt &amp; automatisierte Berichte.</p>
-        </div>
-        
-        <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs space-y-2.5 reveal delay-200">
-          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="14" data-suffix="+">0</div>
-          <div class="text-sm font-bold text-white uppercase tracking-wider">Sprachen &amp; Leichte Sprache</div>
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Leichte Sprache (A2) &amp; 14 Herkunftssprachen für A4-Beratungsmappen im InnForum (sowie bis zu 55 Sprachen in Sonderprojekten).</p>
-        </div>
-        
-        <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs space-y-2.5 reveal delay-300">
-          <div class="text-4xl sm:text-5xl font-extrabold counter-value" data-target="1" data-suffix=" : 1">0</div>
-          <div class="text-sm font-bold text-white uppercase tracking-wider">Persönlicher Austausch</div>
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Schnellstmögliche Rückmeldung, direkte Begleitung vor Ort und kollegialer Support statt anonymer Hotline.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Wave Separator: Counter → Über uns -->
-  <div class="wave-separator bg-slate-900">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="none">
-      <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,60 L0,60 Z" fill="#F8FAFC"/>
-    </svg>
   </div>
 
   <!-- ==================== 7. ÜBER UNS & HINTERGRUND ==================== -->
@@ -5095,7 +5041,7 @@
         title: 'Interaktiver Zeitplan (Gantt-Ansicht)',
         badge: 'Zeitachsen, Meilensteine & Zuständigkeiten',
         src: 'screenshots/stratum-gantt.png',
-        desc: 'Anschauliche Zeitplanung mit Projektphasen, Meilensteinen, Abhängigkeiten und Fortschrittsbalken – Änderungen sind sofort in allen anderen 21 Ansichten sichtbar.'
+        desc: 'Anschauliche Zeitplanung mit Projektphasen, Meilensteinen, Abhängigkeiten und Fortschrittsbalken – Änderungen greifen live in allen sechs Ansichten auf denselben Datenbestand zu.'
       },
       {
         product: 'Stratum',
@@ -5248,7 +5194,7 @@
         const visibleCount = Math.max(1, Math.min(totalItems, Math.round(track.clientWidth / (itemWidth + 16))));
         const firstVisible = Math.min(totalItems - visibleCount + 1, Math.max(1, Math.round(currentScroll / (itemWidth + 16)) + 1));
         const lastVisible = Math.min(totalItems, firstVisible + visibleCount - 1);
-        counter.textContent = `${firstVisible}–${lastVisible} von ${totalItems} Ansichten`;
+        counter.textContent = `${firstVisible}–${lastVisible} von ${totalItems} Screenshots`;
       }
     }
 
